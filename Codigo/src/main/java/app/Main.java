@@ -3,14 +3,16 @@ package app;
 import static spark.Spark.*;
 
 import service.UsuarioService;
+import service.PublicacaoService;
 
 public class Main {
-	
-	private static UsuarioService usuarioService = new UsuarioService();
+    private static PublicacaoService publicacaoService = new PublicacaoService();
+    private static UsuarioService usuarioService = new UsuarioService();
+    
     public static void main(String[] args) {
         port(8080);
         
-        // Configurar os cabeÃ§alhos CORS para permitir solicitaÃ§Ãµes de todas as origens
+        // Configurar os cabeçalhos CORS para permitir solicitações de todas as origens
         options("/*", (request, response) -> {
             String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
             if (accessControlRequestHeaders != null) {
@@ -31,7 +33,6 @@ public class Main {
             return usuarioService.add(request, response);
         });
 
-
         get("/usuario/:id", (request, response) -> usuarioService.get(request, response));
 
         get("/usuario/update/:id", (request, response) -> usuarioService.update(request, response));
@@ -39,6 +40,19 @@ public class Main {
         get("/usuario/delete/:id", (request, response) -> usuarioService.remove(request, response));
 
         get("/usuario", (request, response) -> usuarioService.getAll(request, response));
+        
+        
+        post("/publicacao", (request, response) -> publicacaoService.create(request, response));
+
+
+        // Caminhos para interagir com o serviço de publicação
+        post("/publicacao/:id/like", (request, response) -> {
+            return publicacaoService.addLike(request, response);
+        });
+
+        post("/publicacao/:id/comment", (request, response) -> {
+            return publicacaoService.addComment(request, response);
+        });
         
         after((request, response) -> response.type("application/json"));
     }

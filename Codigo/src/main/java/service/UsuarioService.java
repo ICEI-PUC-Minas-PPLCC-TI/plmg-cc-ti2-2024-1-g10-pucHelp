@@ -52,7 +52,7 @@ public class UsuarioService {
             		"</usuario>\n";
         } else {
             response.status(404); // 404 Not found
-            return "Usuario " + matricula + " n√£o encontrado.";
+            return "Usuario " + matricula + " n„o encontrado.";
         }
 	}
 	
@@ -72,7 +72,7 @@ public class UsuarioService {
             return id;
         } else {
             response.status(404); // 404 Not found
-            return "Produto n√£o encontrado.";
+            return "Produto n„o encontrado.";
         }	
     }
 	public Object remove(Request request, Response response) {
@@ -88,7 +88,7 @@ public class UsuarioService {
         	return id;
         } else {
             response.status(404); // 404 Not found
-            return "Produto n√£o encontrado.";
+            return "Produto n„o encontrado.";
         }
 	}
 
