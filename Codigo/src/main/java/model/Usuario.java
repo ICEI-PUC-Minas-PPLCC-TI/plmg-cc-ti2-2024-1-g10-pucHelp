@@ -87,6 +87,6 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [cpf=" + cpf + ", nome=" + nome + ", senha=" + senha + ", matricula=" + matricula + ", periodo=" + periodo + "]";
+		return "Usuario [cpf=" + cpf + ", nome=" + nome + ", senha=" + senha + ", matricula=" + matricula + "]";
 	}
 }

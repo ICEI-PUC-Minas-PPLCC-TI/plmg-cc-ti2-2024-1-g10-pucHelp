@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.TipoUsuario;
 import model.Usuario;
 
 public class UsuarioDAO {
@@ -28,7 +29,7 @@ public class UsuarioDAO {
 	public boolean conectar() {
 		String driverName = "org.postgresql.Driver";                
 		String serverName = "localhost";
-		String mydatabase = "PUCHELP";
+		String mydatabase = "puchelp";
 		int porta = 5432;
 		String url = "jdbc:postgresql://" + serverName + ":" + porta +"/" + mydatabase;
 		String username = "postgres";
@@ -39,11 +40,11 @@ public class UsuarioDAO {
 			Class.forName(driverName);
 			conexao = DriverManager.getConnection(url, username, password);
 			status = (conexao == null);
-			System.out.println("Conex„o efetuada com o postgres!");
+			System.out.println("Conex√£o efetuada com o postgres!");
 		} catch (ClassNotFoundException e) { 
-			System.err.println("Conex„o N√O efetuada com o postgres -- Driver n„o encontrado -- " + e.getMessage());
+			System.err.println("Conex√£o N√ÉO efetuada com o postgres -- Driver n√£o encontrado -- " + e.getMessage());
 		} catch (SQLException e) {
-			System.err.println("Conex„o N√O efetuada com o postgres -- " + e.getMessage());
+			System.err.println("Conex√£o N√ÉO efetuada com o postgres -- " + e.getMessage());
 		}
 
 		return status;
@@ -85,7 +86,7 @@ public class UsuarioDAO {
 				this.usuarios.add(usuario);
 			}
 		} catch (Exception e) {
-			System.out.println("ERRO ao gravar usuario no disco!");
+			System.out.println("ERRO ao gravar produto no disco!");
 			e.printStackTrace();
 		}
 		return usuarios;
@@ -99,40 +100,55 @@ public class UsuarioDAO {
 	}
 	
 	public boolean inserirUsuario(Usuario usuario) {
-		boolean status = false;
-		try {
-			System.out.println("111");
-			Statement st = getConexao().createStatement();
-			System.out.println("000");
-			st.executeUpdate("INSERT INTO usuario (cpf, matricula, tipo, idcurso, periodo, nome, senha) "
-					       + "VALUES ("+ usuario.getCpf() + ", '" + usuario.getMatricula() + "', '"  
-					       + usuario.getTipo() + "', '"  + usuario.getIdCurso() + "', '" +  usuario.getPeriodo() +
-					       "', '" + usuario.getNome() + "', '" + usuario.getSenha() + "');");
-			st.close();
-			status = true;
-			this.incrementMaxId();
-		} catch (SQLException u) {  
-			throw new RuntimeException(u);
-		}
-		return status;
+	    boolean status = false;
+	    try {
+	        Connection conexao = getConexao();
+	        String sql = "INSERT INTO usuario (cpf, matricula, tipo, idcurso, periodo, nome, senha) " +
+	                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        PreparedStatement st = conexao.prepareStatement(sql);
+	        st.setString(1, usuario.getCpf());
+	        st.setInt(2, usuario.getMatricula());
+	        st.setInt(3, usuario.getTipo());
+	        st.setInt(4, usuario.getIdCurso());
+	        st.setInt(5, usuario.getPeriodo());
+	        st.setString(6, usuario.getNome());
+	        st.setString(7, usuario.getSenha());
+	        int rowsAffected = st.executeUpdate();
+	        st.close();
+	        if (rowsAffected > 0) {
+	            status = true;
+	            incrementMaxId();
+	        }
+	    } catch (SQLException e) {
+	        System.out.println(e);
+	        throw new RuntimeException(e);
+	    }
+	    return status;
 	}
+
 	
 	public boolean atualizarUsuario(Usuario usuario) {
-		boolean status = false;
-		try {  
-			Statement st = conexao.createStatement();
-			String sql = "UPDATE usuario SET nome = '" + usuario.getNome() + "', senha = '"  
-				       + usuario.getSenha() + "', matricula = '" + usuario.getMatricula() + "'"
-					   + " WHERE matricula =" + usuario.getMatricula();
-			st.executeUpdate(sql);
-			st.close();
-			status = true;
-		} catch (SQLException u) {  
-			throw new RuntimeException(u);
-		}
-		return status;
+	    boolean status = false;
+	    try {  
+	        String sql = "UPDATE usuario SET nome = ?, senha = ?, matricula = ? WHERE matricula = ?";
+	        PreparedStatement st = conexao.prepareStatement(sql);
+	        st.setString(1, usuario.getNome());
+	        st.setString(2, usuario.getSenha());
+	        st.setInt(3, usuario.getMatricula());
+	        st.setInt(4, usuario.getMatricula()); // Este par√¢metro √© usado para o WHERE
+
+	        int rowsUpdated = st.executeUpdate();
+	        st.close();
+
+	        if (rowsUpdated > 0) {
+	            status = true;
+	        }
+	    } catch (SQLException e) {  
+	        throw new RuntimeException(e);
+	    }
+	    return status;
 	}
-	
+
 	public boolean excluirUsuario(int matricula) {
 		boolean status = false;
 		try {  
@@ -192,5 +208,51 @@ public class UsuarioDAO {
 			System.err.println(e.getMessage());
 		}
 		return usuarios;
+	}
+	
+	
+	public Usuario getByMatricula(int matricula) {
+	    Usuario usuario = null;
+	    try {
+	        Statement st = conexao.createStatement();
+	        String sql = "SELECT * FROM usuario WHERE matricula = " + matricula;
+	        ResultSet rs = st.executeQuery(sql);
+	        if (rs.next()) {
+	            // Extrair os dados do usu√°rio do ResultSet
+	            String cpf = rs.getString("cpf");
+	            String nome = rs.getString("nome");
+	            String senha = rs.getString("senha");
+	            int tipo = rs.getInt("tipo");
+	            int idCurso = rs.getInt("idcurso");
+	            int periodo = rs.getInt("periodo");
+	            // Criar o objeto Usuario com os dados obtidos
+	            usuario = new Usuario(cpf, nome, senha, matricula, tipo, idCurso, periodo);
+	        }
+	        st.close();
+	    } catch (SQLException u) {
+	        throw new RuntimeException(u);
+	    }
+	    return usuario;
+	}
+
+	
+	public List<TipoUsuario> getTiposUsuarios() {
+	    List<TipoUsuario> tiposUsuarios = new ArrayList<>();
+	    try {  
+	        Statement st = conexao.createStatement();
+	        String sql = "SELECT id, nome FROM tipo_usuario";
+	        ResultSet rs = st.executeQuery(sql);
+	        while (rs.next()) {
+	            int id = rs.getInt("id");
+	            String nome = rs.getString("nome");
+	            TipoUsuario tipoUsuario = new TipoUsuario(id, nome);
+	            tiposUsuarios.add(tipoUsuario);
+	        }
+	        st.close();
+	    } catch (SQLException u) {  
+	        throw new RuntimeException(u);
+	    }
+	    System.out.println(tiposUsuarios);
+	    return tiposUsuarios;
 	}
 }
