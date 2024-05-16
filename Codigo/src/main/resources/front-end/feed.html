@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PUCHELP</title>
     <link rel="stylesheet" href="feed.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="navbar">
@@ -18,65 +19,141 @@
         </div>
     </div>
     <main>
-        <div class="post-container">
-            <div class="post">
-                <div class="user-header">
-                    <img class="profile-img" src="https://via.placeholder.com/50" alt="Profile Image">
-                    <a href="perfil.html" class="username">nome_usuario</a>
-                </div>
-                <img src="https://via.placeholder.com/600x400" alt="Post Image">
-                <div class="comments">
-                    <div class="comment">
-                        <img class="profile-img" src="https://via.placeholder.com/50" alt="Profile Image">
-                        <div>
-                            <a href="perfil.html" class="username">nome_usuario</a>
-                            <p>Great post!</p>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <img class="profile-img" src="https://via.placeholder.com/50" alt="Profile Image">
-                        <div>
-                            <a href="perfil.html" class="username">nome_usuario</a>
-                            <p>Nice photo!</p>
-                        </div>
-                    </div>
-                    <!-- Adicione mais comentários conforme necessário -->
-                </div>
-            </div>
-        </div>
+        <div id="publicacoes-container"></div>
+    
+        <script>
+            function criarPost(publicacao) {
+                var postContainer = document.createElement("div");
+                postContainer.classList.add("post-container");
 
-        <div class="post-container">
-            <div class="post">
-                <div class="user-header">
-                    <img class="profile-img" src="https://via.placeholder.com/50" alt="Profile Image">
-                    <a href="perfil.html" class="username">nome_usuario</a>
-                </div>
-                <p>Just had a great day at the beach! 🏖️ #BeachLife #Sunshine</p>
-                <div class="comments">
-                    <div class="comment">
-                        <img class="profile-img" src="https://via.placeholder.com/50" alt="Profile Image">
-                        <div>
-                            <a href="perfil.html" class="username">nome_usuario</a>
-                            <p>Looks amazing!</p>
-                        </div>
-                    </div>
-                    <!-- Adicione mais comentários conforme necessário -->
-                </div>
-            </div>
-        </div>
+                var post = document.createElement("div");
+                post.classList.add("post");
 
-        <div class="post-container">
-            <div class="post">
-                <div class="user-header">
-                    <img class="profile-img" src="https://via.placeholder.com/50" alt="Profile Image">
-                    <a href="perfil.html" class="username">nome_usuario</a>
-                </div>
-                <p>Enjoying a cup of coffee while reading my favorite book. ☕️📖 #RelaxingTime</p>
-                <div class="comments">
-                    <!-- Adicione mais comentários conforme necessário -->
-                </div>
-            </div>
-        </div>
+                var userHeader = document.createElement("div");
+                userHeader.classList.add("user-header");
+
+                var profileImg = document.createElement("img");
+                profileImg.classList.add("profile-img");
+                profileImg.setAttribute("src", "https://via.placeholder.com/50");
+                profileImg.setAttribute("alt", "Profile Image");
+
+                var username = document.createElement("a");
+                username.classList.add("username");
+                username.setAttribute("href", "perfil.html");
+                username.textContent = "nome_usuario";
+
+                var likeButton = document.createElement("button");
+                likeButton.innerHTML = '<i class="fas fa-heart"></i>';
+                likeButton.classList.add("like-button");
+                likeButton.addEventListener("click", function() {
+                    var icon = likeButton.querySelector("i");
+                    icon.style.color = "red";
+
+                    // Envia a requisição para adicionar like
+                    fetch('/publicacoes/' + publicacao.id + '/like', {
+                        method: 'POST'
+                    }).then(response => {
+                        if (!response.ok) {
+                            alert('Erro ao adicionar like');
+                        }
+                    });
+                });
+
+                var commentButton = document.createElement("button");
+                commentButton.innerHTML = '<i class="fas fa-comment"></i>';
+                commentButton.classList.add("comment-button");
+
+                var commentsSection = document.createElement("div");
+                commentsSection.classList.add("comments");
+
+                userHeader.appendChild(profileImg);
+                userHeader.appendChild(username);
+
+                var publicacaoText = document.createElement("p");
+                publicacaoText.textContent = publicacao.conteudo;
+
+                commentButton.addEventListener("click", function() {
+                    var textarea = document.createElement("textarea");
+                    textarea.placeholder = "Digite seu comentário aqui...";
+                    textarea.classList.add("comment-textarea");
+
+                    var sendButton = document.createElement("button");
+                    sendButton.textContent = "Enviar";
+                    sendButton.classList.add("send-button");
+
+                    sendButton.addEventListener("click", function() {
+                        var commentText = textarea.value;
+
+                        // Envia a requisição para adicionar comentário
+                        fetch('/publicacoes/' + publicacao.id + '/comment', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: 'comment=' + encodeURIComponent(commentText)
+                        }).then(response => {
+                            if (response.ok) {
+                                var newComment = document.createElement("div");
+                                newComment.classList.add("comment");
+
+                                var profileImg = document.createElement("img");
+                                profileImg.classList.add("profile-img");
+                                profileImg.setAttribute("src", "https://via.placeholder.com/50");
+                                profileImg.setAttribute("alt", "Profile Image");
+
+                                var commentContent = document.createElement("div");
+
+                                var username = document.createElement("a");
+                                username.classList.add("username");
+                                username.setAttribute("href", "perfil.html");
+                                username.textContent = "nome_usuario";
+
+                                var commentTextElement = document.createElement("p");
+                                commentTextElement.textContent = commentText;
+
+                                commentContent.appendChild(username);
+                                commentContent.appendChild(commentTextElement);
+
+                                newComment.appendChild(profileImg);
+                                newComment.appendChild(commentContent);
+
+                                commentsSection.appendChild(newComment);
+
+                                textarea.value = "";
+                                commentsSection.removeChild(textarea);
+                                commentsSection.removeChild(sendButton);
+                            } else {
+                                alert('Erro ao adicionar comentário');
+                            }
+                        });
+                    });
+
+                    commentsSection.appendChild(textarea);
+                    commentsSection.appendChild(sendButton);
+                });
+
+                post.appendChild(userHeader);
+                post.appendChild(publicacaoText);
+                post.appendChild(likeButton);
+                post.appendChild(commentButton);
+                post.appendChild(commentsSection);
+
+                postContainer.appendChild(post);
+
+                return postContainer;
+            }
+
+            // Supondo que publicacoes seja um array de objetos de publicação recuperados de algum lugar
+            var publicacoes = localStorage.getItem("publicacoes");
+            if (publicacoes) {
+                publicacoes = JSON.parse(publicacoes);
+                var publicacoesContainer = document.getElementById("publicacoes-container");
+                for (var i = publicacoes.length - 1; i >= 0; i--) {
+                    var post = criarPost(publicacoes[i]);
+                    publicacoesContainer.appendChild(post);
+                }
+            }
+        </script>
     </main>
 </body>
 </html>

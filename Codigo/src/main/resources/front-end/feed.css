@@ -97,3 +97,23 @@ main {
 .comment .username {
     font-weight: bold;
 }
+.like-button {
+    background-color: transparent;
+    border: none; 
+    cursor: pointer;
+    outline: none; 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    padding: 0; 
+}
+.comment-button {
+    background-color: transparent; 
+    border: none; 
+    cursor: pointer;
+    outline: none; 
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    padding: 0; 
+}
