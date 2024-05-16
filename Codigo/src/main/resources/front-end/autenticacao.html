@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticação via Carteirinha - PUCHELP</title>
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
+        </div>
+        <div class="menu">
+            <a href="search.html">Search</a>
+            <a href="autenticacao.html">Autenticação</a>
+            <a href="criar-publi.html">+ Criar publicação</a>
+        </div>
+    </div>
+
+    <div class="auth-container">
+        <p>Tire uma foto da sua carteirinha:</p>
+        <input type="file" accept="image/*" capture="camera" class="camera-input" id="camera-input">
+        <button class="camera-btn" onclick="document.getElementById('camera-input').click()">Abrir Câmera</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

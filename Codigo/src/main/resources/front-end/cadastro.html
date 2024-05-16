@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - PUCHELP</title>
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
+        </div>
+        <div class="menu">
+            <a href="search.html">Search</a>
+            <a href="autenticacao.html">Autenticação</a>
+            <a href="criar-publi.html">+ Criar publicação</a>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Registro - PUCHELP</h2>
+        <form action="#" method="post">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" required>
+
+            <label for="matricula">Matrícula:</label>
+            <input type="text" id="matricula" name="matricula" required>
+
+            <label for="curso">Curso:</label>
+            <select id="curso" name="curso" required>
+                <!-- Adicione outras opções de curso conforme necessário -->
+            </select>
+
+            <label for="periodo">Período:</label>
+            <input type="text" id="periodo" name="periodo" required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required>
+
+            <label for="tipo-usuario">Tipo de Usuário:</label>
+            <select id="tipo-usuario" name="tipo-usuario" required>
+            </select>
+
+            <input type="submit" value="Registrar">
+        </form>
+        <div class="signin">
+            Já possui uma conta? <a href="/login.html" style="color: #3897f0; text-decoration: none;">Faça login</a>
+        </div>
+    </div>
+    <script src="registro.js"></script>
+</body>
+</html>

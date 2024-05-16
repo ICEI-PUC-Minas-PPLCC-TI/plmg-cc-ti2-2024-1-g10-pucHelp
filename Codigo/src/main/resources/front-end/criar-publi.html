@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Publicação - PUCHELP</title>
+    <link rel="stylesheet" href="publicacao.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
+        </div>
+        <div class="menu">
+            <a href="search.html">Search</a>
+            <a href="autenticacao.html">Autenticação</a>
+            <a href="criar-publi.html">+ Criar publicação</a>
+        </div>
+    </div>
+
+    <div class="create-container">
+        <textarea class="create-box" rows="4" placeholder="Digite sua publicação aqui..."></textarea>
+        <input type="file" class="file-input" accept="image/*">
+        <select name="tipo-publicacao" id="tipo-publicacao">
+            <option value="duvida">Dúvida</option>
+            <option value="sugestao">Sugestão</option>
+            <option value="elogio">Elogio</option>
+            <option value="outros">Outros</option>
+        </select>
+        <select name="curso" id="curso">
+            <option value="curso1">Curso 1</option>
+            <option value="curso2">Curso 2</option>
+            <option value="curso3">Curso 3</option>
+            <!-- Adicione mais opções conforme necessário -->
+        </select>
+        <button class="submit-btn">Publicar</button>
+    </div>
+    <script src="publicacao.js"></script>
+</body>
+</html>

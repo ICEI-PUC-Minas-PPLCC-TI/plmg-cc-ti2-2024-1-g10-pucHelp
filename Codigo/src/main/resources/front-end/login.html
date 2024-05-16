@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticação - PUCHELP</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
+        </div>
+        <div class="menu">
+            <a href="search.html">Search</a>
+            <a href="autenticacao.html">Autenticação</a>
+            <a href="criar-publi.html">+ Criar publicação</a>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Autenticação - PUCHELP</h2>
+        <form action="#" method="post">
+            <label for="matricula">Matrícula:</label> <!-- Alterado de CPF para Matrícula -->
+            <input type="text" id="matricula" name="matricula" required> <!-- Alterado de cpf para matricula -->
+
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" required>
+
+            <input type="submit" value="Entrar">
+        </form>
+        <div class="signup">
+            Não tem uma conta? <a href="cadastro.html" style="color: #3897f0; text-decoration: none;">Registre-se</a>
+        </div>
+    </div>
+    <script src="login.js"></script>
+</body>
+</html>

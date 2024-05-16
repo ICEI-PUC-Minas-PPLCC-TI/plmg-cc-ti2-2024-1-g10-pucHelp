@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - PUCHELP</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
+        </div>
+        <div class="menu">
+            <a href="search.html">Search</a>
+            <a href="autenticacao.html">Autenticação</a>
+            <a href="criar-publi.html">+ Criar publicação</a>
+        </div>
+    </div>
+
+    <div class="chat-container" id="chat-container">
+        <div class="message receiver">
+            <div class="message-content">Olá! Como você está?</div>
+            <div class="message-time">13:00</div>
+        </div>
+        <div class="message sender">
+            <div class="message-content">Oi! Estou bem, obrigado!</div>
+            <div class="message-time">13:02</div>
+        </div>
+        <!-- Adicione mais mensagens conforme necessário -->
+    </div>
+
+    <div class="input-container">
+        <input type="text" class="message-input" id="message-input" placeholder="Digite sua mensagem...">
+        <button class="send-btn" onclick="sendMessage()">Enviar</button>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+</html>

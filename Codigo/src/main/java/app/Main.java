@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         port(8080);
         
-        // Configurar os cabeçalhos CORS para permitir solicitações de todas as origens
+        // Configurar os cabeï¿½alhos CORS para permitir solicitaï¿½ï¿½es de todas as origens
         options("/*", (request, response) -> {
             String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
             if (accessControlRequestHeaders != null) {
@@ -44,8 +44,7 @@ public class Main {
         
         post("/publicacao", (request, response) -> publicacaoService.create(request, response));
 
-
-        // Caminhos para interagir com o serviço de publicação
+        // Caminhos para interagir com o serviï¿½o de publicaï¿½ï¿½o
         post("/publicacao/:id/like", (request, response) -> {
             return publicacaoService.addLike(request, response);
         });
