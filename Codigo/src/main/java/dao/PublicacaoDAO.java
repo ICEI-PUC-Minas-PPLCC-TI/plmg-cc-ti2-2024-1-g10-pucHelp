@@ -38,11 +38,11 @@ public class PublicacaoDAO {
             Class.forName(driverName);
             conexao = DriverManager.getConnection(url, username, password);
             status = (conexao == null);
-            System.out.println("Conexão efetuada com o postgres!");
+            System.out.println("Conexï¿½o efetuada com o postgres!");
         } catch (ClassNotFoundException e) { 
-            System.err.println("Conexão NÃO efetuada com o postgres -- Driver não encontrado -- " + e.getMessage());
+            System.err.println("Conexï¿½o Nï¿½O efetuada com o postgres -- Driver nï¿½o encontrado -- " + e.getMessage());
         } catch (SQLException e) {
-            System.err.println("Conexão NÃO efetuada com o postgres -- " + e.getMessage());
+            System.err.println("Conexï¿½o Nï¿½O efetuada com o postgres -- " + e.getMessage());
         }
 
         return status;
@@ -60,14 +60,29 @@ public class PublicacaoDAO {
         return status;
     }
 
-    public Publicacao get(int id) {
-        for (Publicacao publicacao: publicacoes) {
-            if (id == publicacao.getId()) {
-                return publicacao;
+    public Publicacao getPublicacaoById(int id) {
+        try {
+            String query = "SELECT * FROM publicacoes WHERE id = ?";
+            PreparedStatement statement = conexao.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String tipo = resultSet.getString("tipo");
+                String conteudo = resultSet.getString("conteudo");
+                int idAluno = resultSet.getInt("idAluno");
+                int like = resultSet.getInt("likes");
+                String coments = resultSet.getString("coments");
+
+                return new Publicacao(id, tipo, conteudo, idAluno, like, coments);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return null;
     }
+
 
     public List<Publicacao> getAll() {
         return publicacoes;
@@ -88,8 +103,31 @@ public class PublicacaoDAO {
         }
         return publicacoes;
     }
-
     
+    
+    public List<Publicacao> getTodasPublicacoes() {
+        List<Publicacao> publicacoes = new ArrayList<>();
+        try {
+            Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = st.executeQuery("SELECT * FROM publicacoes");
+
+            while (rs.next()) {
+                Publicacao publicacao = new Publicacao(
+                        rs.getInt("id"),
+                        rs.getString("tipo"),
+                        rs.getString("conteudo"),
+                        rs.getInt("idAluno"),
+                        rs.getInt("likes"),
+                        rs.getString("coments")
+                );
+                publicacoes.add(publicacao);
+            }
+            st.close();
+        } catch (SQLException e) {
+            System.err.println("Erro ao recuperar todas as publicaÃ§Ãµes: " + e.getMessage());
+        }
+        return publicacoes;
+    }
     
     private Connection getConexao() {
         if (conexao == null) {
@@ -102,7 +140,7 @@ public class PublicacaoDAO {
         boolean status = false;
         try {
             Statement st = getConexao().createStatement();
-            st.executeUpdate("INSERT INTO publicacoes (tipo, conteudo, idAluno, like, coments) "
+            st.executeUpdate("INSERT INTO publicacoes (tipo, conteudo, idAluno, likes, coments) "
                            + "VALUES ('" + publicacao.getTipo() + "', '" + publicacao.getConteudo() + "', "  
                            + publicacao.getIdAluno() + ", " + publicacao.getLike() + ", '" + publicacao.getComents() + "');");
             st.close();
@@ -119,7 +157,7 @@ public class PublicacaoDAO {
         try {  
             Statement st = conexao.createStatement();
             String sql = "UPDATE publicacoes SET tipo = '" + publicacao.getTipo() + "', conteudo = '"  
-                       + publicacao.getConteudo() + "', idAluno = " + publicacao.getIdAluno() + ", like = " 
+                       + publicacao.getConteudo() + "', idAluno = " + publicacao.getIdAluno() + ", likes = " 
                        + publicacao.getLike() + ", coments = '" + publicacao.getComents() + "' WHERE id = " + publicacao.getId();
             st.executeUpdate(sql);
             st.close();
@@ -156,7 +194,7 @@ public class PublicacaoDAO {
 
                 for(int i = 0; rs.next(); i++) {
                     publicacoes[i] = new Publicacao(rs.getInt("id"), rs.getString("tipo"), rs.getString("conteudo"),
-                        rs.getInt("idAluno"), rs.getInt("like"), rs.getString("coments"));
+                        rs.getInt("idAluno"), rs.getInt("likes"), rs.getString("coments"));
                 }
             }
             st.close();
@@ -179,7 +217,7 @@ public class PublicacaoDAO {
 
                 for(int i = 0; rs.next(); i++) {
                     publicacoes[i] = new Publicacao(rs.getInt("id"), rs.getString("tipo"), rs.getString("conteudo"),
-                        rs.getInt("idAluno"), rs.getInt("like"), rs.getString("coments"));
+                        rs.getInt("idAluno"), rs.getInt("likes"), rs.getString("coments"));
                 }
             }
             st.close();

@@ -219,6 +219,7 @@ public class UsuarioDAO {
 	        ResultSet rs = st.executeQuery(sql);
 	        if (rs.next()) {
 	            // Extrair os dados do usuário do ResultSet
+	        	int id = rs.getInt("id");
 	            String cpf = rs.getString("cpf");
 	            String nome = rs.getString("nome");
 	            String senha = rs.getString("senha");
@@ -226,7 +227,7 @@ public class UsuarioDAO {
 	            int idCurso = rs.getInt("idcurso");
 	            int periodo = rs.getInt("periodo");
 	            // Criar o objeto Usuario com os dados obtidos
-	            usuario = new Usuario(cpf, nome, senha, matricula, tipo, idCurso, periodo);
+	            usuario = new Usuario(id, cpf, nome, senha, matricula, tipo, idCurso, periodo);
 	        }
 	        st.close();
 	    } catch (SQLException u) {

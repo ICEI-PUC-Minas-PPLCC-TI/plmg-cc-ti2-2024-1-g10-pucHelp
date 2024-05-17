@@ -1,6 +1,7 @@
 package model;
 
 public class Usuario {
+	public int id;
 	private String cpf;
 	private int matricula;
 	private int tipo;
@@ -17,6 +18,17 @@ public class Usuario {
 		this.tipo = 0;
 		this.idCurso = 0;
 		this.periodo = 0;
+	}
+	
+	public Usuario(int id, String cpf, String nome, String senha, int matricula, int tipo, int idCurso, int periodo) {
+		this.id = id;
+		this.cpf = cpf;
+		this.nome = nome;
+		this.senha = senha;
+		this.matricula = matricula;
+		this.tipo = tipo;
+		this.idCurso = idCurso;
+		this.periodo = periodo;
 	}
 	
 	public Usuario(String cpf, String nome, String senha, int matricula, int tipo, int idCurso, int periodo) {
@@ -87,6 +99,6 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [cpf=" + cpf + ", nome=" + nome + ", senha=" + senha + ", matricula=" + matricula + "]";
+		return "Usuario [id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", senha=" + senha + ", matricula=" + matricula + "]";
 	}
 }

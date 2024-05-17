@@ -168,6 +168,7 @@ public class UsuarioService {
             if (user.getSenha().equals(senha)) {
                 // Criar um novo objeto JSON com os dados do usuário
                 JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id", user.id);
                 jsonObject.put("matricula", user.getMatricula());
                 jsonObject.put("nome", user.getNome());
                 jsonObject.put("id_curso", user.getIdCurso());

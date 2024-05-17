@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     form.addEventListener('submit', function(event) {
         event.preventDefault(); // Impedir o comportamento padrão de enviar o formulário
 
-        // Obter os valores de CPF e senha do formulário
+        // Obter os valores de Matrícula e senha do formulário
         const matricula = form.querySelector("#matricula").value;
         const senha = form.querySelector("#senha").value;
 
@@ -19,11 +19,18 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
+                console.log(response)
+                // return arguments;
                 // Redirecionar o usuário para a página principal após o login bem-sucedido
+                // Salvar informações do usuário na sessionStorage
+                sessionStorage.setItem('matricula', matricula);
+                sessionStorage.setItem('senha', senha);
                 window.location.href = 'feed.html';
+
+
             } else {
                 // Exibir mensagem de erro para o usuário caso as credenciais estejam incorretas
-                alert('Matricula ou senha incorretos. Por favor, tente novamente.');
+                alert('Matrícula ou senha incorretos. Por favor, tente novamente.');
             }
         })
         .catch(error => {

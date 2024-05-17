@@ -1,159 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PUCHELP</title>
-    <link rel="stylesheet" href="feed.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PUCHELP</title>
+  <link rel="stylesheet" href="feed.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  />
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">
-            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
-        </div>
-        <div class="menu">
-            <a href="search.html">Search</a>
-            <a href="autenticacao.html">Autenticação</a>
-            <a href="criar-publi.html">+ Criar publicação</a>
-        </div>
+  <div class="navbar">
+    <div class="logo">
+      <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP" /></a>
     </div>
-    <main>
-        <div id="publicacoes-container"></div>
-    
-        <script>
-            function criarPost(publicacao) {
-                var postContainer = document.createElement("div");
-                postContainer.classList.add("post-container");
+    <div class="menu">
+      <a href="search.html">Search</a>
+      <a href="autenticacao.html">Autenticação</a>
+      <a href="criar-publi.html">+ Criar publicação</a>
+    </div>
+  </div>
+  <main>
+    <div id="publicacoes-container"></div>
 
-                var post = document.createElement("div");
-                post.classList.add("post");
+    <script>
+      // Realiza uma requisição GET para obter as publicações do back-end
+      fetch("http://localhost:8080/publicacoes", {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Verifica se os dados foram recebidos corretamente
+          if (data && Array.isArray(data)) {
+            var publicacoesContainer = document.getElementById(
+              "publicacoes-container"
+            );
+            // Limpa o conteúdo atual do contêiner de publicações
+            publicacoesContainer.innerHTML = "";
+            // Itera sobre as publicações recebidas e cria os posts correspondentes
+            data.forEach((publicacao) => {
+              var post = criarPost(publicacao);
+              publicacoesContainer.appendChild(post);
+            });
+          } else {
+            console.error("Erro ao obter as publicações do back-end");
+          }
+        })
+        .catch((error) => {
+          console.error("Erro:", error);
+          alert("Erro ao obter as publicações.");
+        });
 
-                var userHeader = document.createElement("div");
-                userHeader.classList.add("user-header");
+      // Função para criar um post com base nos dados da publicação
+      function criarPost(publicacao) {
+        var postContainer = document.createElement("div");
+        postContainer.classList.add("post-container");
+
+        var post = document.createElement("div");
+        post.classList.add("post");
+
+        var userHeader = document.createElement("div");
+        userHeader.classList.add("user-header");
+
+        var profileImg = document.createElement("img");
+        profileImg.classList.add("profile-img");
+        profileImg.setAttribute("src", "https://via.placeholder.com/50");
+        profileImg.setAttribute("alt", "Profile Image");
+
+        var username = document.createElement("a");
+        username.classList.add("username");
+        username.setAttribute("href", "perfil.html");
+        username.textContent = "nome_usuario";
+
+        var likeButton = document.createElement("button");
+        likeButton.innerHTML = '<i class="fas fa-heart"></i>';
+        likeButton.classList.add("like-button");
+
+        var likeCount = document.createElement("span");
+        likeCount.classList.add("like-count");
+        likeCount.textContent = publicacao.like; // Definindo a contagem inicial de likes
+        likeButton.appendChild(likeCount);
+
+        likeButton.addEventListener("click", function () {
+          var icon = likeButton.querySelector("i");
+          icon.style.color = "red";
+
+          // Envia a requisição para adicionar like
+          fetch(
+            "http://localhost:8080/publicacoes/like",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ id: publicacao.id })
+            }
+          ).then((response) => {
+            if (!response.ok) {
+              alert("Erro ao adicionar like");
+            } else {
+              // Incrementando a contagem de likes e atualizando o texto
+              publicacao.like++;
+              likeCount.textContent = publicacao.like;
+            }
+          });
+        });
+
+        var commentButton = document.createElement("button");
+        commentButton.innerHTML = '<i class="fas fa-comment"></i>';
+        commentButton.classList.add("comment-button");
+
+        var commentsSection = document.createElement("div");
+        commentsSection.classList.add("comments");
+
+        userHeader.appendChild(profileImg);
+        userHeader.appendChild(username);
+
+        var publicacaoText = document.createElement("p");
+        publicacaoText.textContent = publicacao.conteudo;
+
+        commentButton.addEventListener("click", function () {
+          var textarea = document.createElement("textarea");
+          textarea.placeholder = "Digite seu comentário aqui...";
+          textarea.classList.add("comment-textarea");
+
+          var sendButton = document.createElement("button");
+          sendButton.textContent = "Enviar";
+          sendButton.classList.add("send-button");
+
+          sendButton.addEventListener("click", function () {
+            var commentText = textarea.value;
+
+            // Envia a requisição para adicionar comentário
+            fetch(
+              "http://localhost:8080/publicacoes/comment",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: publicacao.id, comment: commentText })
+              }
+            ).then((response) => {
+              if (response.ok) {
+                var newComment = document.createElement("div");
+                newComment.classList.add("comment");
 
                 var profileImg = document.createElement("img");
                 profileImg.classList.add("profile-img");
-                profileImg.setAttribute("src", "https://via.placeholder.com/50");
+                profileImg.setAttribute(
+                  "src",
+                  "https://via.placeholder.com/50"
+                );
                 profileImg.setAttribute("alt", "Profile Image");
+
+                var commentContent = document.createElement("div");
 
                 var username = document.createElement("a");
                 username.classList.add("username");
                 username.setAttribute("href", "perfil.html");
                 username.textContent = "nome_usuario";
 
-                var likeButton = document.createElement("button");
-                likeButton.innerHTML = '<i class="fas fa-heart"></i>';
-                likeButton.classList.add("like-button");
-                likeButton.addEventListener("click", function() {
-                    var icon = likeButton.querySelector("i");
-                    icon.style.color = "red";
+                var commentTextElement = document.createElement("p");
+                commentTextElement.textContent = commentText;
 
-                    // Envia a requisição para adicionar like
-                    fetch('/publicacoes/' + publicacao.id + '/like', {
-                        method: 'POST'
-                    }).then(response => {
-                        if (!response.ok) {
-                            alert('Erro ao adicionar like');
-                        }
-                    });
-                });
+                commentContent.appendChild(username);
+                commentContent.appendChild(commentTextElement);
 
-                var commentButton = document.createElement("button");
-                commentButton.innerHTML = '<i class="fas fa-comment"></i>';
-                commentButton.classList.add("comment-button");
+                newComment.appendChild(profileImg);
+                newComment.appendChild(commentContent);
 
-                var commentsSection = document.createElement("div");
-                commentsSection.classList.add("comments");
+                commentsSection.appendChild(newComment);
 
-                userHeader.appendChild(profileImg);
-                userHeader.appendChild(username);
+                textarea.value = "";
+                commentsSection.removeChild(textarea);
+                commentsSection.removeChild(sendButton);
+              } else {
+                alert("Erro ao adicionar comentário");
+              }
+            });
+          });
 
-                var publicacaoText = document.createElement("p");
-                publicacaoText.textContent = publicacao.conteudo;
+          commentsSection.appendChild(textarea);
+          commentsSection.appendChild(sendButton);
+        });
 
-                commentButton.addEventListener("click", function() {
-                    var textarea = document.createElement("textarea");
-                    textarea.placeholder = "Digite seu comentário aqui...";
-                    textarea.classList.add("comment-textarea");
+        post.appendChild(userHeader);
+        post.appendChild(publicacaoText);
+        post.appendChild(likeButton);
+        post.appendChild(commentButton);
+        post.appendChild(commentsSection);
 
-                    var sendButton = document.createElement("button");
-                    sendButton.textContent = "Enviar";
-                    sendButton.classList.add("send-button");
+        postContainer.appendChild(post);
 
-                    sendButton.addEventListener("click", function() {
-                        var commentText = textarea.value;
-
-                        // Envia a requisição para adicionar comentário
-                        fetch('/publicacoes/' + publicacao.id + '/comment', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            },
-                            body: 'comment=' + encodeURIComponent(commentText)
-                        }).then(response => {
-                            if (response.ok) {
-                                var newComment = document.createElement("div");
-                                newComment.classList.add("comment");
-
-                                var profileImg = document.createElement("img");
-                                profileImg.classList.add("profile-img");
-                                profileImg.setAttribute("src", "https://via.placeholder.com/50");
-                                profileImg.setAttribute("alt", "Profile Image");
-
-                                var commentContent = document.createElement("div");
-
-                                var username = document.createElement("a");
-                                username.classList.add("username");
-                                username.setAttribute("href", "perfil.html");
-                                username.textContent = "nome_usuario";
-
-                                var commentTextElement = document.createElement("p");
-                                commentTextElement.textContent = commentText;
-
-                                commentContent.appendChild(username);
-                                commentContent.appendChild(commentTextElement);
-
-                                newComment.appendChild(profileImg);
-                                newComment.appendChild(commentContent);
-
-                                commentsSection.appendChild(newComment);
-
-                                textarea.value = "";
-                                commentsSection.removeChild(textarea);
-                                commentsSection.removeChild(sendButton);
-                            } else {
-                                alert('Erro ao adicionar comentário');
-                            }
-                        });
-                    });
-
-                    commentsSection.appendChild(textarea);
-                    commentsSection.appendChild(sendButton);
-                });
-
-                post.appendChild(userHeader);
-                post.appendChild(publicacaoText);
-                post.appendChild(likeButton);
-                post.appendChild(commentButton);
-                post.appendChild(commentsSection);
-
-                postContainer.appendChild(post);
-
-                return postContainer;
-            }
-
-            // Supondo que publicacoes seja um array de objetos de publicação recuperados de algum lugar
-            var publicacoes = localStorage.getItem("publicacoes");
-            if (publicacoes) {
-                publicacoes = JSON.parse(publicacoes);
-                var publicacoesContainer = document.getElementById("publicacoes-container");
-                for (var i = publicacoes.length - 1; i >= 0; i--) {
-                    var post = criarPost(publicacoes[i]);
-                    publicacoesContainer.appendChild(post);
-                }
-            }
-        </script>
-    </main>
+        return postContainer;
+      }
+    </script>
+  </main>
 </body>
 </html>
