@@ -22,9 +22,6 @@
         <textarea id="publicacao" class="create-box" rows="4" placeholder="Digite sua publicação aqui..."></textarea>
         <input type="file" id="file" class="file-input" accept="image/*">
         <br>
-        <label for="idAluno">ID do Aluno:</label>
-        <input type="number" id="idAluno" required>
-        <br><br>
 
         <select name="tipo-publicacao" id="tipo-publicacao">
             <option value="duvida">Dúvida</option>
@@ -111,38 +108,5 @@
         <button id="publicar-btn" class="submit-btn">Publicar</button>
     </div>
     <script src="publicacao.js"></script>
-    <script>
-        document.getElementById("publicar-btn").addEventListener("click", function(event) {
-            event.preventDefault();
-
-            var conteudo = document.getElementById("publicacao").value;
-            var idAluno = document.getElementById("idAluno").value;
-            var curso = document.getElementById("curso").value;
-            var tipo = curso; 
-
-            var formData = {
-                tipo: tipo,
-                conteudo: conteudo,
-                idAluno: idAluno
-            };
-
-            fetch('http://localhost:8080/publicacao', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-                window.location.href = "feed.html";
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Erro ao criar publicação.');
-            });
-        });
-    </script>
 </body>
 </html>

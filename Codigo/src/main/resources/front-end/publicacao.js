@@ -1,9 +1,10 @@
-// Aqui você pode adicionar funcionalidades JavaScript, se necessário
 document.getElementById("publicar-btn").addEventListener("click", function(event) {
     event.preventDefault();
 
+    // Obter o ID do aluno da sessionStorage
+    var idAluno = sessionStorage.getItem("id_usuario");
+
     var conteudo = document.getElementById("publicacao").value;
-    var idAluno = document.getElementById("idAluno").value;
     var curso = document.getElementById("curso").value;
     var tipo = curso; 
 

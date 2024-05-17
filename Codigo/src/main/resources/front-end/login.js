@@ -17,13 +17,17 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ matricula: matricula, senha: senha }) // Enviar os dados de login como JSON
         })
-        .then(response => {
+        .then(async response => {
             if (response.ok) {
-                console.log(response)
-                // return arguments;
+                let id = await response.json();
+                console.log(id);
+                id = id.id;
+
                 // Redirecionar o usuário para a página principal após o login bem-sucedido
                 // Salvar informações do usuário na sessionStorage
+                console.log(id);
                 sessionStorage.setItem('matricula', matricula);
+                sessionStorage.setItem('id_usuario', id);
                 sessionStorage.setItem('senha', senha);
                 window.location.href = 'feed.html';
 

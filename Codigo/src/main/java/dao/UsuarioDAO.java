@@ -235,6 +235,32 @@ public class UsuarioDAO {
 	    }
 	    return usuario;
 	}
+	
+	public Usuario getById(int id) {
+	    Usuario usuario = null;
+	    try {
+	        Statement st = conexao.createStatement();
+	        String sql = "SELECT * FROM usuario WHERE id = " + id;
+	        ResultSet rs = st.executeQuery(sql);
+	        if (rs.next()) {
+	            // Extrair os dados do usuário do ResultSet
+	            String cpf = rs.getString("cpf");
+	            String nome = rs.getString("nome");
+	            String senha = rs.getString("senha");
+	            int matricula = rs.getInt("matricula");
+	            int tipo = rs.getInt("tipo");
+	            int idCurso = rs.getInt("idcurso");
+	            int periodo = rs.getInt("periodo");
+	            // Criar o objeto Usuario com os dados obtidos
+	            usuario = new Usuario(id, cpf, nome, senha, matricula, tipo, idCurso, periodo);
+	        }
+	        st.close();
+	    } catch (SQLException u) {
+	        throw new RuntimeException(u);
+	    }
+	    return usuario;
+	}
+
 
 	
 	public List<TipoUsuario> getTiposUsuarios() {
