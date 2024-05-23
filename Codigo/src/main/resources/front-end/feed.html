@@ -192,6 +192,54 @@
         post.appendChild(commentButton);
         post.appendChild(commentsSection);
 
+        // Verifica se a publicação pertence ao usuário logado
+        var idUsuario = sessionStorage.getItem("id_usuario");
+        console.log(publicacao.idAluno);
+        if (idUsuario && publicacao.idAluno == idUsuario) {
+          var editButton = document.createElement("button");
+          editButton.innerHTML = '<i class="fas fa-edit"></i>';
+          editButton.classList.add("edit-button");
+
+          editButton.addEventListener("click", function () {
+            // Redireciona para a página de edição da publicação
+            window.location.href = `editar-publi.html?id=${publicacao.id}`;
+          });
+
+          post.appendChild(editButton);
+
+          var deleteButton = document.createElement("button");
+          deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+          deleteButton.classList.add("delete-button");
+
+          deleteButton.addEventListener("click", function () {
+            // Exibe uma mensagem de confirmação
+            var confirmDelete = confirm("Tem certeza que deseja apagar esta publicação?");
+            if (confirmDelete) {
+              // Envia a requisição para excluir a publicação
+              fetch(
+                `http://localhost:8080/publicacoes/delete/${publicacao.id}`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({ id: publicacao.id })
+                }
+              ).then((response) => {
+                if (response.ok) {
+                  // Remove o post da interface
+                  postContainer.parentNode.removeChild(postContainer);
+                  alert("Publicação apagada com sucesso!");
+                } else {
+                  alert("Erro ao apagar a publicação");
+                }
+              });
+            }
+          });
+
+          post.appendChild(deleteButton);
+        }
+
         postContainer.appendChild(post);
 
         return postContainer;

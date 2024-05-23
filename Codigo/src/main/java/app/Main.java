@@ -30,6 +30,7 @@ public class Main {
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
+        // CRUD Usuario
         post("/usuario", (request, response) -> {
             System.out.println("Requisição POST /produto recebida:");
             System.out.println("Corpo da requisição: " + request.body());
@@ -37,8 +38,26 @@ public class Main {
             
             return usuarioService.add(request, response);
         });
-
         
+        get("/usuario/:id", (request, response) -> usuarioService.get(request, response));
+
+        // Nao funcional
+        put("/usuario/update/:id", (request, response) -> usuarioService.update(request, response));
+
+        // Nao funcional
+        delete("/usuario/delete/:id", (request, response) -> usuarioService.remove(request, response));
+
+        get("/usuario", (request, response) -> usuarioService.getAll(request, response));
+        
+        //login
+        post("/login", (request, response) -> {
+            System.out.println("Requisição POST /login recebida:");
+            System.out.println("Corpo da requisição: " + request.body());
+            System.out.println("Parâmetros da requisição: " + request.params());
+            return usuarioService.login(request, response);
+        });
+
+        // GET tipoUsuario
         get("/tiposusuario", (request, response) -> {
             System.out.println("Requisição GET /tipo usuario recebida:");
             System.out.println("Corpo da requisição: " + request.body());
@@ -46,6 +65,7 @@ public class Main {
             return usuarioService.getAllTypesUserJSON();
         });
         
+        // GET Cursos
         get("/cursos", (request, response) -> {
             System.out.println("Requisição GET /cursos recebida:");
             System.out.println("Corpo da requisição: " + request.body());
@@ -53,41 +73,47 @@ public class Main {
             return cursoService.getAllCoursesJSON();
         });
         
-        
-        post("/login", (request, response) -> {
-            System.out.println("Requisição POST /login recebida:");
-            System.out.println("Corpo da requisição: " + request.body());
-            System.out.println("Parâmetros da requisição: " + request.params());
-            return usuarioService.login(request, response);
-        });
-        
+        // CRUD Publicacoes
         post("/publicacao", (request, response) -> {
         	System.out.println(request);
         	return publicacaoService.create(request, response);
         });
         
+        // Obtém todas as publicações
         get("/publicacoes", (request, response) -> {
             System.out.println("Requisição GET /publicacoes recebida:");
             System.out.println("Corpo da requisição: " + request.body());
             System.out.println("Parâmetros da requisição: " + request.params());
             return publicacaoService.getPublicacoes(request, response);
         });
-        // Caminhos para interagir com o servi�o de publica��o
+        
+        // Nova rota para obter uma publicação específica pelo ID
+        get("/publicacoes/:id", (request, response) -> {
+            System.out.println("Requisição GET /publicacao/:id recebida:");
+            return publicacaoService.getPublicacao(request, response);
+        });
+  
+        // Caminhos para interagir com o serviço de publicação
+        // Curtir Publicação
         post("/publicacoes/like", (request, response) -> {
             return publicacaoService.addLike(request, response);
         });
 
+        // Comentar Publicação
         post("/publicacoes/comment", (request, response) -> {
             return publicacaoService.addComment(request, response);
         });
-        get("/usuario/:id", (request, response) -> usuarioService.get(request, response));
-
-        get("/usuario/update/:id", (request, response) -> usuarioService.update(request, response));
-
-        get("/usuario/delete/:id", (request, response) -> usuarioService.remove(request, response));
-
-        get("/usuario", (request, response) -> usuarioService.getAll(request, response));
         
+        // Editar Publicação
+        put("/publicacoes/edit/:id", (request, response) -> {
+        	return publicacaoService.update(request, response);
+        });
+        
+        // Deletar Publicação
+        delete("/publicacoes/delete/:id", (request, response) -> {
+        	return publicacaoService.delete(request, response);
+        });
+
         after((request, response) -> response.type("application/json"));
                
     }

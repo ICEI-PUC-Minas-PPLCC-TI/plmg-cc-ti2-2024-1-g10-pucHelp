@@ -17,6 +17,7 @@ public class PublicacaoService {
         publicacaoDao = new PublicacaoDAO();
         publicacaoDao.conectar();
     }
+
     public String create(Request request, Response response) {
         String body = request.body();
         JSONObject json = new JSONObject(body);
@@ -36,7 +37,7 @@ public class PublicacaoService {
             return "Erro ao criar a publicação. Por favor, tente novamente mais tarde.";
         }
     }
- 
+
     public Object addLike(Request request, Response response) {
         try {
             // Obter os dados do corpo da requisição
@@ -123,6 +124,88 @@ public class PublicacaoService {
             // Em caso de erro, configurar o status da resposta para 500 (Internal Server Error)
             response.status(500);
             return "Erro ao obter as publicações.";
+        }
+    }
+
+    public Object update(Request request, Response response) {
+        try {
+            String body = request.body();
+            System.out.println(body);
+            JSONObject json = new JSONObject(body);
+            System.out.println(json);
+            int id = json.getInt("id");
+            System.out.println(id);
+            String conteudo = json.getString("conteudo");
+            System.out.println(conteudo);
+            Publicacao publicacao = publicacaoDao.getPublicacaoById(id);
+            System.out.println(publicacao);
+            if (publicacao != null) {
+                // Atualizar o conteúdo da publicação
+                publicacao.setConteudo(conteudo);
+                publicacaoDao.atualizarPublicacao(publicacao);
+                response.status(200); // OK
+                return "Publicação atualizada.";
+            } else {
+                response.status(404); // Not Found
+                return "Publicação não encontrada.";
+            }
+        } catch (Exception e) {
+            response.status(400); // Bad Request
+            return "Erro ao processar a requisição.";
+        }
+    }
+
+    // Novo método para obter uma publicação específica pelo ID
+    public Object getPublicacao(Request request, Response response) {
+        try {
+            int id = Integer.parseInt(request.params(":id"));
+            Publicacao publicacao = publicacaoDao.getPublicacaoById(id);
+
+            if (publicacao != null) {
+                JSONObject publicacaoJSON = new JSONObject();
+                publicacaoJSON.put("id", publicacao.getId());
+                publicacaoJSON.put("tipo", publicacao.getTipo());
+                publicacaoJSON.put("conteudo", publicacao.getConteudo());
+                publicacaoJSON.put("idAluno", publicacao.getIdAluno());
+                publicacaoJSON.put("like", publicacao.getLike());
+                publicacaoJSON.put("coments", publicacao.getComents());
+
+                response.type("application/json");
+                return publicacaoJSON.toString();
+            } else {
+                response.status(404); // Not Found
+                return "Publicação não encontrada.";
+            }
+        } catch (Exception e) {
+            response.status(400); // Bad Request
+            return "Erro ao processar a requisição.";
+        }
+    }
+    
+    public Object delete(Request request, Response response) {
+        try {
+            // Obter o ID da publicação a ser deletada a partir dos parâmetros da requisição
+            int id = Integer.parseInt(request.params(":id"));
+            
+            // Verificar se a publicação existe no banco de dados
+            Publicacao publicacao = publicacaoDao.getPublicacaoById(id);
+            
+            if (publicacao != null) {
+                // Deletar a publicação do banco de dados
+                if (publicacaoDao.excluirPublicacao(id)) {
+                    response.status(200); // OK
+                    return "Publicação deletada com sucesso.";
+                } else {
+                    response.status(500); // Internal Server Error
+                    return "Erro ao deletar a publicação. Por favor, tente novamente mais tarde.";
+                }
+            } else {
+                response.status(404); // Not Found
+                return "Publicação não encontrada.";
+            }
+        } catch (Exception e) {
+            response.status(400); // Bad Request
+            return "Erro ao processar a requisição.";
         }
     }
 
