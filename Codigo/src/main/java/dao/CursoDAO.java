@@ -85,4 +85,54 @@ public class CursoDAO {
 
         return curso;
     }
+
+    public boolean atualizarCurso(Curso cursoAtualizado) {
+        String sql = "UPDATE curso SET nome = ?, idarea = ? WHERE id = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, cursoAtualizado.getNome());
+            stmt.setInt(2, cursoAtualizado.getIdArea());
+            stmt.setInt(3, cursoAtualizado.getId());
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean removerCurso(int idCurso) {
+        String sql = "DELETE FROM curso WHERE id = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idCurso);
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int inserirCurso(Curso novoCurso) {
+        String sql = "INSERT INTO curso (nome, idarea) VALUES (?, ?) RETURNING id";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, novoCurso.getNome());
+            stmt.setInt(2, novoCurso.getIdArea());
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            } else {
+                return -1; // Se não houver ID retornado, significa que a inserção falhou
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1; // Retorna -1 em caso de erro
+        }
+    }
+
+
 }

@@ -47,7 +47,7 @@ public class Main {
 
         delete("/usuario/:id", (request, response) -> usuarioService.remove(request, response));
 
-        get("/usuario", (request, response) -> usuarioService.getAll(request, response));
+        get("/usuario", (request, response) -> usuarioService.getAllUsuarioJSON());
         
         //login
         post("/login", (request, response) -> {
@@ -65,6 +65,10 @@ public class Main {
             return usuarioService.getAllTypesUserJSON();
         });
         
+        // Post Cursos
+        post("/cursos", (request, response) -> cursoService.create(request, response));
+
+        
         // GET Cursos
         get("/cursos", (request, response) -> {
             System.out.println("Requisição GET /cursos recebida:");
@@ -78,6 +82,13 @@ public class Main {
             int idCurso = Integer.parseInt(request.params(":id"));
             return cursoService.getCursoById(idCurso);
         });
+        
+        // UPDATE
+        put("/cursos/:id", (request, response) -> cursoService.update(request, response));
+
+        //DELETE
+        delete("/cursos/:id", (request, response) -> cursoService.delete(request, response));
+
 
         
         // CRUD Publicacoes

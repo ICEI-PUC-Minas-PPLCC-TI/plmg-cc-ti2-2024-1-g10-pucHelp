@@ -253,5 +253,29 @@ public class UsuarioService {
             return "Erro ao processar a solicitação";
         }
     }
+    
+    public String getAllUsuarioJSON() {
+        List<Usuario> usuarios = usuarioDao.listarUsuarios(); // Obtém todos os usuários do banco de dados
+
+        JSONArray jsonArray = new JSONArray();
+        for (Usuario usuario : usuarios) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", usuario.getId());
+            jsonObject.put("matricula", usuario.getMatricula());
+            jsonObject.put("nome", usuario.getNome());
+            jsonObject.put("cpf", usuario.getCpf());
+            jsonObject.put("email", usuario.getEmail()); // Adicione o campo de e-mail
+            jsonObject.put("periodo", usuario.getPeriodo());
+            jsonObject.put("idCurso", usuario.getIdCurso());
+            jsonObject.put("tipo", usuario.getTipo());
+            // Adicione mais campos conforme necessário
+
+            jsonArray.put(jsonObject);
+        }
+        System.out.println(usuarios);
+
+        return jsonArray.toString();
+    }
+
 }
         

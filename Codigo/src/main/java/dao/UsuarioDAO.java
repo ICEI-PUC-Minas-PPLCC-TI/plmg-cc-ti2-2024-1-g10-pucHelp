@@ -287,4 +287,35 @@ public class UsuarioDAO {
 	    System.out.println(tiposUsuarios);
 	    return tiposUsuarios;
 	}
+	
+	
+    public List<Usuario> listarUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT id, cpf, matricula, nome, senha, tipo, idcurso, periodo, email FROM usuario";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String cpf = rs.getString("cpf");
+                int matricula = rs.getInt("matricula");
+                String nome = rs.getString("nome");
+                String senha = rs.getString("senha");
+                int tipo = rs.getInt("tipo");
+                int idCurso = rs.getInt("idcurso");
+                int periodo = rs.getInt("periodo");
+                String email = rs.getString("email");
+
+                Usuario usuario = new Usuario(id, cpf, nome, senha, matricula, tipo, idCurso, periodo, email);
+                usuarios.add(usuario);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usuarios;
+    }
+
 }

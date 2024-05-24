@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Curso - PUCHELP</title>
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
+        </div>
+        <div class="menu">
+            <a href="search.html">Search</a>
+            <a href="autenticacao.html">Autenticação</a>
+            <a href="criar-publi.html">+ Criar publicação</a>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Editar Curso - PUCHELP</h2>
+        <form id="edit-course-form">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="id-curso" style="display: none;">ID do Curso:</label>
+            <input type="text" id="id-curso" name="id-curso" style="display: none;" required>
+
+            <label for="id-area">ID da Área:</label>
+            <input type="text" id="id-area" name="id-area" required disabled>
+
+            <input type="submit" value="Atualizar">
+        </form>
+        <div class="signin">
+            <a href="listagem-cursos.html" style="color: #3897f0; text-decoration: none;">Voltar à listagem de cursos</a>
+        </div>
+    </div>
+    <script src="editar-curso.js"></script>
+</body>
+</html>

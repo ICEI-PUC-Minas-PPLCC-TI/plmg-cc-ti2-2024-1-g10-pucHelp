@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
+    if (!sessionStorage.getItem("id_usuario")) {
+        // Se não estiver logado, exibe um alerta
+        alert("Você precisa estar logado para acessar esta página.");
+        
+        // Redireciona para a página de login após 1 segundo
+        setTimeout(function() {
+            window.location.href = "login.html"; // Altere para o caminho correto da sua página de login
+        }, 1000);
+    }
+
     const form = document.querySelector('form');
     const tipoUsuarioSelect = document.querySelector('#tipo-usuario');
     const cursoSelect = document.querySelector('#curso');
