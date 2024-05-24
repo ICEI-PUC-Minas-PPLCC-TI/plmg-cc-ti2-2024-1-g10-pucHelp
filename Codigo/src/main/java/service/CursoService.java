@@ -30,4 +30,20 @@ public class CursoService {
 
         return jsonArray.toString();
     }
+
+    public Object getCursoById(int idCurso) {
+        Curso curso = cursoDAO.getCursoById(idCurso);
+        
+        if (curso != null) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", curso.getId());
+            jsonObject.put("nome", curso.getNome());
+            jsonObject.put("idArea", curso.getIdArea());
+
+            return jsonObject.toString();
+        } else {
+            // Se o curso não for encontrado, retorne uma mensagem de erro ou null
+            return "Curso não encontrado para o ID: " + idCurso;
+        }
+    }
 }

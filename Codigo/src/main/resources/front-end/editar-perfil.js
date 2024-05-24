@@ -83,13 +83,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const periodo = form.querySelector("#periodo").value;
         const idCurso = form.querySelector("#curso").value;
         const tipoUsuario = form.querySelector("#tipo-usuario").value;
+        const email = form.querySelector("#email").value;
+
     
         const data = {
             cpf: cpf,
             nome: nome,
             periodo: periodo,
             idCurso: idCurso,
-            tipoUsuario: tipoUsuario
+            tipoUsuario: tipoUsuario,
+            email: email
         };
     
         if (senha) {

@@ -11,6 +11,8 @@ public class Usuario {
 	private int periodo;
 	private String nome;
 	private String senha;
+    private String email; // Adicione o campo de e-mail
+
 	
 	public Usuario() {
 		this.cpf = "";
@@ -20,28 +22,32 @@ public class Usuario {
 		this.tipo = 0;
 		this.idCurso = 0;
 		this.periodo = 0;
+		this.email = "";
 	}
 	
-	public Usuario(int id, String cpf, String nome, String senha, int matricula, int tipo, int idCurso, int periodo) {
-		this.id = id;
-		this.cpf = cpf;
-		this.nome = nome;
-		this.senha = senha;
-		this.matricula = matricula;
-		this.tipo = tipo;
-		this.idCurso = idCurso;
-		this.periodo = periodo;
+	public Usuario(String cpf, String nome, String senha, int matricula, int tipo, int idCurso, int periodo, String email) {
+	    this.cpf = cpf;
+	    this.nome = nome;
+	    this.senha = senha;
+	    this.matricula = matricula;
+	    this.tipo = tipo;
+	    this.idCurso = idCurso;
+	    this.periodo = periodo;
+	    this.email = email; // Inicialize o campo de e-mail no construtor
 	}
 	
-	public Usuario(String cpf, String nome, String senha, int matricula, int tipo, int idCurso, int periodo) {
+	public Usuario(int id, String cpf, String nome, String senha, int matricula, int tipo, int idCurso, int periodo, String email) {
+	    this.id = id;
 		this.cpf = cpf;
-		this.nome = nome;
-		this.senha = senha;
-		this.matricula = matricula;
-		this.tipo = tipo;
-		this.idCurso = idCurso;
-		this.periodo = periodo;
+	    this.nome = nome;
+	    this.senha = senha;
+	    this.matricula = matricula;
+	    this.tipo = tipo;
+	    this.idCurso = idCurso;
+	    this.periodo = periodo;
+	    this.email = email; // Inicialize o campo de e-mail no construtor
 	}
+    
 
 	public String getCpf() {
 		return cpf;
@@ -101,11 +107,19 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", senha=" + senha + ", matricula=" + matricula + "]";
+		return "Usuario [id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", senha=" + senha + ", email=" + email + ", matricula=" + matricula + "]";
 	}
 
 	public int getId() {
 		// TODO Auto-generated method stub
 		return this.id;
 	}
+	
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

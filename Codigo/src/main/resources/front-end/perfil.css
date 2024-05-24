@@ -140,3 +140,18 @@ body {
 .edit-profile-button:hover {
     background-color: #0056b3;
 }
+.delete-account-button {
+    background-color: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px; /* Ajuste conforme necessário */
+}
+
+.delete-account-button:hover {
+    background-color: #cc0000;
+}

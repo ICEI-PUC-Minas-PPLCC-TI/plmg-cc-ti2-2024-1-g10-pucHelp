@@ -103,8 +103,8 @@ public class UsuarioDAO {
 	    boolean status = false;
 	    try {
 	        Connection conexao = getConexao();
-	        String sql = "INSERT INTO usuario (cpf, matricula, tipo, idcurso, periodo, nome, senha) " +
-	                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
+	        String sql = "INSERT INTO usuario (cpf, matricula, tipo, idcurso, periodo, nome, senha, email) " +
+	                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	        PreparedStatement st = conexao.prepareStatement(sql);
 	        st.setString(1, usuario.getCpf());
 	        st.setInt(2, usuario.getMatricula());
@@ -113,6 +113,7 @@ public class UsuarioDAO {
 	        st.setInt(5, usuario.getPeriodo());
 	        st.setString(6, usuario.getNome());
 	        st.setString(7, usuario.getSenha());
+	        st.setString(8, usuario.getEmail());
 	        int rowsAffected = st.executeUpdate();
 	        st.close();
 	        if (rowsAffected > 0) {
@@ -130,13 +131,13 @@ public class UsuarioDAO {
 	public boolean atualizarUsuario(Usuario usuario) {
 	    boolean status = false;
 	    try {  
-	        String sql = "UPDATE usuario SET nome = ?, senha = ?, matricula = ? WHERE matricula = ?";
+	        String sql = "UPDATE usuario SET nome = ?, senha = ?, matricula = ?, email = ? WHERE matricula = ?";
 	        PreparedStatement st = conexao.prepareStatement(sql);
 	        st.setString(1, usuario.getNome());
 	        st.setString(2, usuario.getSenha());
 	        st.setInt(3, usuario.getMatricula());
-	        st.setInt(4, usuario.getMatricula()); // Este parâmetro é usado para o WHERE
-
+	        st.setString(4, usuario.getEmail()); // Este parâmetro é usado para o WHERE
+	        st.setInt(5, usuario.getMatricula());
 	        int rowsUpdated = st.executeUpdate();
 	        st.close();
 
@@ -149,11 +150,11 @@ public class UsuarioDAO {
 	    return status;
 	}
 
-	public boolean excluirUsuario(int matricula) {
+	public boolean excluirUsuario(int id) {
 		boolean status = false;
 		try {  
 			Statement st = conexao.createStatement();
-			st.executeUpdate("DELETE FROM usuario WHERE matricula = " + matricula);
+			st.executeUpdate("DELETE FROM usuario WHERE id = " + id);
 			st.close();
 			status = true;
 		} catch (SQLException u) {
@@ -176,7 +177,7 @@ public class UsuarioDAO {
 
 	             for(int i = 0; rs.next(); i++) {
 	                usuarios[i] = new Usuario(rs.getString("cpf"), rs.getString("nome"), rs.getString("senha"),
-	                		rs.getInt("matricula"), rs.getInt("tipo"), rs.getInt("idCurso"), rs.getInt("periodo"));
+	                		rs.getInt("matricula"), rs.getInt("tipo"), rs.getInt("idCurso"), rs.getInt("periodo"), rs.getString("email"));
 	             }
 	          }
 	          st.close();
@@ -200,7 +201,7 @@ public class UsuarioDAO {
 
 	             for(int i = 0; rs.next(); i++) {
 	            	 usuarios[i] = new Usuario(rs.getString("cpf"), rs.getString("nome"), rs.getString("senha"),
-		                		rs.getInt("matricula"), rs.getInt("tipo"), rs.getInt("idCurso"), rs.getInt("periodo"));
+		                		rs.getInt("matricula"), rs.getInt("tipo"), rs.getInt("idCurso"), rs.getInt("periodo"), rs.getString("email"));
 	             }
 	          }
 	          st.close();
@@ -226,8 +227,9 @@ public class UsuarioDAO {
 	            int tipo = rs.getInt("tipo");
 	            int idCurso = rs.getInt("idcurso");
 	            int periodo = rs.getInt("periodo");
+	            String email = rs.getString("email");
 	            // Criar o objeto Usuario com os dados obtidos
-	            usuario = new Usuario(id, cpf, nome, senha, matricula, tipo, idCurso, periodo);
+	            usuario = new Usuario(id, cpf, nome, senha, matricula, tipo, idCurso, periodo, email);
 	        }
 	        st.close();
 	    } catch (SQLException u) {
@@ -252,8 +254,10 @@ public class UsuarioDAO {
 	            int tipo = rs.getInt("tipo");
 	            int idCurso = rs.getInt("idcurso");
 	            int periodo = rs.getInt("periodo");
+	            String email = rs.getString("email");
+	            System.out.println(id);
 	            // Criar o objeto Usuario com os dados obtidos
-	            usuario = new Usuario(id, cpf, nome, senha, matricula, tipo, idCurso, periodo);
+	            usuario = new Usuario(id, cpf, nome, senha, matricula, tipo, idCurso, periodo, email);
 	        }
 	        st.close();
 	    } catch (SQLException u) {

@@ -56,6 +56,7 @@ label {
 
 input[type="text"],
 input[type="password"],
+input[type="email"],
 select {
     width: 100%;
     padding: 10px;
@@ -94,4 +95,19 @@ input[type="submit"]:hover {
 
 .signin a:hover {
     text-decoration: underline;
+}
+
+input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #444; /* Cor de fundo padrão */
+    color: #fff; /* Cor do texto padrão */
+}
+
+input[type="email"]:focus {
+    outline: none; /* Remover contorno ao focar */
+    background-color: #555; /* Cor de fundo ao focar */
 }

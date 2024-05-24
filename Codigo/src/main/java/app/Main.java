@@ -43,11 +43,9 @@ public class Main {
         	return usuarioService.getUsuarioById(request, response);
         });
 
-        // TO DO
         put("/usuario/:id", (request, response) -> usuarioService.update(request, response));
 
-        // Nao funcional
-        delete("/usuario/delete/:id", (request, response) -> usuarioService.remove(request, response));
+        delete("/usuario/:id", (request, response) -> usuarioService.remove(request, response));
 
         get("/usuario", (request, response) -> usuarioService.getAll(request, response));
         
@@ -74,6 +72,13 @@ public class Main {
             System.out.println("Parâmetros da requisição: " + request.params());
             return cursoService.getAllCoursesJSON();
         });
+        
+     // GET Curso por ID
+        get("/cursos/:id", (request, response) -> {
+            int idCurso = Integer.parseInt(request.params(":id"));
+            return cursoService.getCursoById(idCurso);
+        });
+
         
         // CRUD Publicacoes
         post("/publicacao", (request, response) -> {

@@ -63,4 +63,26 @@ public class CursoDAO {
 
         return cursos;
     }
+
+    public Curso getCursoById(int idCurso) {
+        Curso curso = null;
+        String sql = "SELECT id, nome, idarea FROM curso WHERE id = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idCurso);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int id = rs.getInt("id");
+                    String nome = rs.getString("nome");
+                    int idArea = rs.getInt("idarea");
+
+                    curso = new Curso(id, nome, idArea);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return curso;
+    }
 }

@@ -4,9 +4,8 @@
 // Este arquivo está vazio, mas pode ser usado para adicionar lógica JavaScript relacionada ao registro se necessário.
 document.addEventListener('DOMContentLoaded', function() {
 
+    // Verifica se o usuário logado é o mesmo do perfil exibido
     const form = document.querySelector('form');
-
-
     const tipoUsuarioSelect = document.querySelector('#tipo-usuario');
     
         // URL da requisição para obter os tipos de usuários
@@ -100,6 +99,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const periodo = form.querySelector("#periodo");
         const idCurso = form.querySelector("#curso");
         const tipoUsuario = form.querySelector("#tipo-usuario");
+        const email = form.querySelector("#email");
+
         const formData = new FormData();
         formData.append('cpf', cpf);
         formData.append('matricula', matricula);
@@ -108,6 +109,8 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('tipo', tipoUsuario);
         formData.append('periodo', periodo);
         formData.append('idCurso', 1);
+        formData.append('email', email.value);
+        console.log(email.value);
 
 
         const queryParams = new URLSearchParams({
@@ -117,7 +120,8 @@ document.addEventListener('DOMContentLoaded', function() {
             senha: senha.value,
             tipo: tipoUsuario.value,
             periodo: periodo.value,
-            idCurso: idCurso.value
+            idCurso: idCurso.value,
+            email: email.value
         });
 
         console.log(queryParams);
@@ -128,17 +132,20 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             if (response.ok) {
-                return response.json();
+                // Exibir mensagem de usuário registrado com sucesso
+                alert('Usuário registrado com sucesso!');
+                // Redirecionar para a página de login após 2 segundos
+                setTimeout(function() {
+                    window.location.href = '/login.html';
+                }, 2000);
+            } else {
+                throw new Error('Erro ao registrar usuário');
             }
-            throw new Error('Erro ao registrar usuário');
-        })
-        .then(data => {
-            console.log('Usuário registrado com sucesso:', data);
-            // Redirecionar para outra página, exibir mensagem de sucesso, etc.
         })
         .catch(error => {
             console.error('Erro ao registrar usuário:', error);
             // Exibir mensagem de erro para o usuário, etc.
         });
+
     });
 });
