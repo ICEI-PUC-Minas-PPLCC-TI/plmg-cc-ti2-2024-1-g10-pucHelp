@@ -76,27 +76,91 @@ public class UsuarioService {
 	        return null;
 	    }
 	}
-
 	
+	public Object getUsuarioById(Request request, Response response) {
+	    try {
+	        // Obter o ID do usuário a partir dos parâmetros da solicitação
+	        int id = Integer.parseInt(request.params(":id"));
+
+	        // Usar o ID para obter o usuário correspondente
+	        Usuario usuario = usuarioDao.getById(id);
+
+	        if (usuario != null) {
+	            // Criar um objeto JSON para representar os dados do usuário
+	            JSONObject jsonResponse = new JSONObject();
+	            jsonResponse.put("id", usuario.getId());
+	            jsonResponse.put("matricula", usuario.getMatricula());
+	            jsonResponse.put("nome", usuario.getNome());
+	            jsonResponse.put("cpf", usuario.getCpf());
+	            jsonResponse.put("senha", usuario.getSenha());
+	            jsonResponse.put("tipo", usuario.getTipo());
+	            jsonResponse.put("idCurso", usuario.getIdCurso());
+	            jsonResponse.put("periodo", usuario.getPeriodo());
+	            // Adicione mais campos conforme necessário
+
+	            // Definir o tipo de conteúdo da resposta como application/json
+	            response.type("application/json");
+
+	            // Retornar o objeto JSON como uma string
+	            return jsonResponse.toString();
+	        } else {
+	            response.status(404); // 404 Not Found
+	            return "Usuário não encontrado.";
+	        }
+	    } catch (NumberFormatException e) {
+	        // Se o parâmetro não puder ser convertido para um número
+	        response.status(400); // 400 Bad Request
+	        return "ID inválido.";
+	    } catch (Exception e) {
+	        // Tratar qualquer outra exceção que possa ocorrer durante o processamento da solicitação
+	        response.status(500); // 500 Internal Server Error
+	        return "Erro ao processar a solicitação.";
+	    }
+	}
+
 	public Object update(Request request, Response response) {
-        int id = Integer.parseInt(request.params(":id"));
-        
-		Usuario usuario = (Usuario) usuarioDao.get(id);
+	    int id = Integer.parseInt(request.params(":id"));
+	    System.out.println(id);
+	    Usuario usuario = (Usuario) usuarioDao.getById(id);
+	    if (usuario != null) {
+	        try {
+	            // Parse o corpo da requisição como JSON
+	            JSONObject jsonBody = new JSONObject(request.body());
+	            System.out.println(jsonBody.getString("cpf"));
+	            // Atualizar os campos do usuário com os dados recebidos
+	            usuario.setCpf(jsonBody.getString("cpf"));
+	            usuario.setNome(jsonBody.getString("nome"));
+	            usuario.setIdCurso(jsonBody.getInt("idCurso"));
+	            System.out.println(jsonBody.getString("idCurso"));
+	            System.out.println(jsonBody.getString("periodo"));
+	            usuario.setPeriodo(jsonBody.getInt("periodo"));
+	            System.out.println(jsonBody.getString("periodo"));
 
-        if (usuario != null) {
-        	usuario.setCpf(request.queryParams("cpf"));
-        	usuario.setNome(request.queryParams("nome"));
-        	usuario.setIdCurso(Integer.parseInt(request.queryParams("IdCurso")));
-        	usuario.setPeriodo(Integer.parseInt(request.queryParams("periodo")));
-        	usuario.setSenha(request.queryParams("senha"));
 
-        	usuarioDao.atualizarUsuario(usuario);
-            return id;
-        } else {
-            response.status(404); // 404 Not found
-            return "Produto não encontrado.";
-        }	
-    }
+	            // Verificar se a senha está presente e não está vazia
+	            if (jsonBody.has("senha") && !jsonBody.getString("senha").isEmpty()) {
+	                usuario.setSenha(jsonBody.getString("senha"));
+	            }
+
+	            // Atualize outros campos conforme necessário
+	            // usuario.setTipoUsuario(jsonBody.getInt("tipoUsuario"));
+
+	            // Atualizar o usuário no banco de dados
+	            System.out.println("asda");
+	            usuarioDao.atualizarUsuario(usuario);
+
+	            return id;
+	        } catch (Exception e) {
+	            response.status(400); // Bad Request
+	            return "Erro ao processar a requisição: " + e.getMessage();
+	        }
+	    } else {
+	        response.status(404); // Not Found
+	        return "Usuário não encontrado.";
+	    }
+	}
+
+
 	public Object remove(Request request, Response response) {
         int id = Integer.parseInt(request.params(":id"));
 

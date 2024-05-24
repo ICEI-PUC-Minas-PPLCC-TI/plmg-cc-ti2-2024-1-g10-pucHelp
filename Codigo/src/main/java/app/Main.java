@@ -39,10 +39,12 @@ public class Main {
             return usuarioService.add(request, response);
         });
         
-        get("/usuario/:id", (request, response) -> usuarioService.get(request, response));
+        get("/usuario/:id", (request, response) -> {
+        	return usuarioService.getUsuarioById(request, response);
+        });
 
-        // Nao funcional
-        put("/usuario/update/:id", (request, response) -> usuarioService.update(request, response));
+        // TO DO
+        put("/usuario/:id", (request, response) -> usuarioService.update(request, response));
 
         // Nao funcional
         delete("/usuario/delete/:id", (request, response) -> usuarioService.remove(request, response));
@@ -91,6 +93,12 @@ public class Main {
         get("/publicacoes/:id", (request, response) -> {
             System.out.println("Requisição GET /publicacao/:id recebida:");
             return publicacaoService.getPublicacao(request, response);
+        });
+        
+        // Nova rota para obter várias pubicações pelo ID do usuário
+        get("/publicacoes/byUser/:idUsuario", (request, response) -> {
+            System.out.println("Requisição GET /publicacao/:id recebida:");
+            return publicacaoService.getPublicacoesByUsuario(request, response);
         });
   
         // Caminhos para interagir com o serviço de publicação

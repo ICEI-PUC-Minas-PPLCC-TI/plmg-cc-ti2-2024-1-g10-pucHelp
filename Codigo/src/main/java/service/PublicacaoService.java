@@ -209,4 +209,47 @@ public class PublicacaoService {
         }
     }
 
+    public Object getPublicacoesByUsuario(Request request, Response response) {
+        try {
+            // Obtém o ID do usuário da solicitação
+            System.out.println("saas");
+            int idUsuario = Integer.parseInt(request.params(":idUsuario"));
+            System.out.println(idUsuario);
+            // Obtém todas as publicações associadas ao ID do usuário
+            List<Publicacao> publicacoes = publicacaoDao.getPublicacoesByUsuario(idUsuario);
+
+            // Verifica se foram encontradas publicações
+            if (publicacoes != null && !publicacoes.isEmpty()) {
+                // Cria um JSONArray para armazenar as publicações
+                JSONArray publicacoesArray = new JSONArray();
+
+                // Itera sobre as publicações e adiciona cada uma ao JSONArray
+                for (Publicacao publicacao : publicacoes) {
+                    JSONObject publicacaoJSON = new JSONObject();
+                    publicacaoJSON.put("id", publicacao.getId());
+                    publicacaoJSON.put("tipo", publicacao.getTipo());
+                    publicacaoJSON.put("conteudo", publicacao.getConteudo());
+                    publicacaoJSON.put("idAluno", publicacao.getIdAluno());
+                    publicacaoJSON.put("like", publicacao.getLike());
+                    publicacaoJSON.put("coments", publicacao.getComents());
+
+                    publicacoesArray.put(publicacaoJSON);
+                }
+
+                // Define o tipo de conteúdo da resposta como application/json
+                response.type("application/json");
+
+                // Retorna o JSONArray como uma string JSON
+                return publicacoesArray.toString();
+            } else {
+                response.status(404); // Not Found
+                return "Não foram encontradas publicações para este usuário.";
+            }
+        } catch (Exception e) {
+            response.status(400); // Bad Request
+            return "Erro ao processar a requisição.";
+        }
+    }
+
+
 }

@@ -240,7 +240,8 @@ public class UsuarioDAO {
 	    Usuario usuario = null;
 	    try {
 	        Statement st = conexao.createStatement();
-	        String sql = "SELECT * FROM usuario WHERE id = " + id;
+	        String sql = "SELECT * FROM usuario INNER JOIN curso ON curso.id = usuario.idcurso"
+	        		+ " WHERE usuario.id = " + id;
 	        ResultSet rs = st.executeQuery(sql);
 	        if (rs.next()) {
 	            // Extrair os dados do usuário do ResultSet

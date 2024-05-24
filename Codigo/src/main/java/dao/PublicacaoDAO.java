@@ -226,4 +226,29 @@ public class PublicacaoDAO {
         }
         return publicacoes;
     }
+
+    public List<Publicacao> getPublicacoesByUsuario(int idUsuario) {
+        List<Publicacao> publicacoes = new ArrayList<>();
+        try {
+            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM publicacoes WHERE idAluno = ?");
+            statement.setInt(1, idUsuario);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Publicacao publicacao = new Publicacao(
+                        rs.getInt("id"),
+                        rs.getString("tipo"),
+                        rs.getString("conteudo"),
+                        rs.getInt("idAluno"),
+                        rs.getInt("likes"),
+                        rs.getString("coments")
+                );
+                publicacoes.add(publicacao);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Erro ao recuperar publicações do usuário: " + e.getMessage());
+        }
+        return publicacoes;
+    }
 }

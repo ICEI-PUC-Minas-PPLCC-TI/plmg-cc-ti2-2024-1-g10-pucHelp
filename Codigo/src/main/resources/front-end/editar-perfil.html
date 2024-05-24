@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil - PUCHELP</title>
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
+        </div>
+        <div class="menu">
+            <a href="search.html">Search</a>
+            <a href="autenticacao.html">Autenticação</a>
+            <a href="criar-publi.html">+ Criar publicação</a>
+        </div>
+    </div>
+    <div class="container">
+        <h2>Editar Perfil - PUCHELP</h2>
+        <form id="edit-profile-form">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" required disabled>
+
+            <label for="matricula">Matrícula:</label>
+            <input type="text" id="matricula" name="matricula" required disabled>
+
+            <label for="curso">Curso:</label>
+            <select id="curso" name="curso" required>
+                <!-- Opções serão preenchidas dinamicamente -->
+            </select>
+
+            <label for="periodo">Período:</label>
+            <input type="text" id="periodo" name="periodo" required>
+
+            <label for="senha">Nova Senha:</label>
+            <input type="password" id="senha" name="senha">
+
+            <label for="tipo-usuario">Tipo de Usuário:</label>
+            <select id="tipo-usuario" name="tipo-usuario" required>
+                <!-- Opções serão preenchidas dinamicamente -->
+            </select>
+
+            <input type="submit" value="Atualizar">
+        </form>
+        <div class="signin">
+            <a href="perfil.html" style="color: #3897f0; text-decoration: none;">Voltar ao perfil</a>
+        </div>
+    </div>
+    <script src="editar-perfil.js"></script>
+</body>
+</html>

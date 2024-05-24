@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Collection;
+
 public class Usuario {
 	public int id;
 	private String cpf;
@@ -100,5 +102,10 @@ public class Usuario {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", cpf=" + cpf + ", nome=" + nome + ", senha=" + senha + ", matricula=" + matricula + "]";
+	}
+
+	public int getId() {
+		// TODO Auto-generated method stub
+		return this.id;
 	}
 }
