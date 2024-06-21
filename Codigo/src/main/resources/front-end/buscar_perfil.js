@@ -1,4 +1,3 @@
-// Aqui você pode adicionar funcionalidades JavaScript, se necessário
 document.addEventListener("DOMContentLoaded", function () {
   if (!sessionStorage.getItem("id_usuario")) {
     // Se não estiver logado, exibe um alerta
@@ -69,69 +68,38 @@ document.addEventListener("DOMContentLoaded", function () {
         // Se houver perfis filtrados, criar elementos HTML para cada perfil e adicioná-los ao container de resultados
         perfisFiltrados.forEach(async (perfil) => {
           const divResult = document.createElement("div");
-          divResult.classList.add("result");
-
-          const imgProfile = document.createElement("img");
-          imgProfile.classList.add("profile-img");
-          imgProfile.src = perfil.imagem; // Substitua 'imagem' pelo nome do campo correspondente no objeto de perfil retornado pelo back-end
-          imgProfile.alt = "Profile Image";
-          divResult.appendChild(imgProfile);
-
-          const divUsername = document.createElement("div");
-          divUsername.classList.add("username");
-          divUsername.textContent = perfil.nome; // Substitua 'nome' pelo nome do campo correspondente no objeto de perfil retornado pelo back-end
-          divResult.appendChild(divUsername);
-
-          const divInfo = document.createElement("div");
-          divInfo.classList.add("info");
-
-          // Adicione informações adicionais conforme necessário (unidade, curso, período, email)
-          // Certifique-se de substituir os nomes dos campos pelos nomes correspondentes nos objetos de perfil retornados pelo back-end
-          const infoUnidade = document.createElement("p");
-          infoUnidade.textContent = "Unidade: " + perfil.unidade;
-          divInfo.appendChild(infoUnidade);
-
-          const infoCurso = document.createElement("p");
-          infoCurso.textContent = "Curso: " + perfil.idCurso;
-
-          // Realiza uma requisição GET para obter os dados do curso associado ao usuário
-          await fetch(`http://localhost:8080/cursos/${perfil.idCurso}`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
-            .then((curso) => {
-              // Verifica se os dados do curso foram recebidos corretamente
-              if (curso) {
-                // Preenche o campo "Curso" nas informações do perfil com o nome do curso
-                infoCurso.textContent = "Curso: " + curso.nome;
-              } else {
-                // console.error(
-                //   "Erro ao obter os dados do curso associado ao usuário"
-                // );
-              }
-            })
-            .catch((error) => {
-              console.error("Erro:", error);
-              //   alert("Erro ao obter os dados do curso associado ao usuário.");
-            });
-          divInfo.appendChild(infoCurso);
-
-          const infoPeriodo = document.createElement("p");
-          infoPeriodo.textContent = "Período: " + perfil.periodo;
-          divInfo.appendChild(infoPeriodo);
-
-          const infoEmail = document.createElement("p");
-          infoEmail.textContent = "Email: " + perfil.email;
-          divInfo.appendChild(infoEmail);
-
-          divResult.appendChild(divInfo);
-
+          divResult.classList.add("col-md-6"); // Adiciona a classe col-md-6 para dividir em duas colunas
+          divResult.innerHTML = `
+            <div class="result">
+              <img class="profile-img" src="${perfil.imagem}" alt="Profile Image">
+              <div class="username">${perfil.nome}</div>
+              <div class="info">
+                <p>Unidade: ${perfil.unidade}</p>
+                <p>Curso: ${await obterNomeCurso(perfil.idCurso)}</p>
+                <p>Período: ${perfil.periodo}</p>
+                <p>Email: ${perfil.email}</p>
+              </div>
+            </div>
+          `;
+          resultContainer.classList.add("row");
           resultContainer.appendChild(divResult);
         });
       }
+    }
+  }
+
+  // Função para obter o nome do curso baseado no ID do curso
+  async function obterNomeCurso(idCurso) {
+    try {
+      const response = await fetch(`http://localhost:8080/cursos/${idCurso}`);
+      if (!response.ok) {
+        throw new Error("Erro ao obter os dados do curso");
+      }
+      const curso = await response.json();
+      return curso.nome;
+    } catch (error) {
+      console.error("Erro ao obter os dados do curso:", error);
+      return "Curso não encontrado";
     }
   }
 

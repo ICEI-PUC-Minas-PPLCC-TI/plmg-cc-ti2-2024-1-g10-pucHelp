@@ -1,0 +1,27 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #100f0f;
+}
+
+.navbar {
+    background-color: #394047;
+}
+
+.navbar-brand img {
+    height: 80px;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #fff !important;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1024px;
+    margin: 20px auto;
+    padding: 0 20px;
+}

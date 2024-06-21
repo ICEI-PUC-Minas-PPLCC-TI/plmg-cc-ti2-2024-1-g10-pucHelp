@@ -4,50 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscar Perfil - PUCHELP</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="navbar.css">
     <link rel="stylesheet" href="buscar_perfil.css">
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">
-            <a href="feed.html"><img src="./logo/PUCHELP.png" alt="PUCHELP"></a>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #03bfcc;">
+        <a class="navbar-brand" href="feed.html">
+            <img src="./logo/PUCHELP.png" alt="PUCHELP" height="80">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="search.html"><i class="fas fa-search"></i>Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="autenticacao.html"><i class="fas fa-user"></i>Autenticação</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="criar-publi.html"><i class="fas fa-plus-circle"></i>Criar publicação</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="perfil.html"><i class="fas fa-user"></i>Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="admin-link" href="listagem-cursos.html" style="display: none">Listar Cursos (ADM)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Login</a>
+                </li>
+            </ul>
         </div>
-        <div class="menu">
-            <a href="search.html">Search</a>
-            <a href="autenticacao.html">Autenticação</a>
-            <a href="criar-publi.html">+ Criar publicação</a>
-        </div>
+    </nav>
+
+    <div class="container search-container mt-4">
+        <input type="text" class="form-control search-box" placeholder="Digite o perfil a ser buscado...">
     </div>
 
-    <div class="search-container">
-        <input type="text" class="search-box" placeholder="Digite o perfil a ser buscado...">
-    </div>
-
-    <div class="result-container">
+    <div class="container result-container">
         <!-- Exemplo de resultados encontrados (pode adicionar mais conforme necessário) -->
-        <div class="result">
-            <img class="profile-img" src="https://via.placeholder.com/150" alt="Profile Image">
-            <div class="username">Nome do Usuário</div>
-            <div class="info">
-                <p>Unidade: Nome da Unidade</p>
-                <p>Curso: Nome do Curso</p>
-                <p>Período: Período do Curso</p>
-                <p>Email: exemplo@dominio.com</p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="result bg-primary">
+                    <img class="profile-img" src="https://via.placeholder.com/150" alt="Profile Image">
+                    <div class="username">Nome do Usuário</div>
+                    <div class="info">
+                        <p>Unidade: Nome da Unidade</p>
+                        <p>Curso: Nome do Curso</p>
+                        <p>Período: Período do Curso</p>
+                        <p>Email: exemplo@dominio.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="result bg-primary">
+                    <img class="profile-img" src="https://via.placeholder.com/150" alt="Profile Image">
+                    <div class="username">Nome do Usuário</div>
+                    <div class="info">
+                        <p>Unidade: Nome da Unidade</p>
+                        <p>Curso: Nome do Curso</p>
+                        <p>Período: Período do Curso</p>
+                        <p>Email: exemplo@dominio.com</p>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="result">
-            <img class="profile-img" src="https://via.placeholder.com/150" alt="Profile Image">
-            <div class="username">Nome do Usuário</div>
-            <div class="info">
-                <p>Unidade: Nome da Unidade</p>
-                <p>Curso: Nome do Curso</p>
-                <p>Período: Período do Curso</p>
-                <p>Email: exemplo@dominio.com</p>
-            </div>
-        </div>
-
         <!-- Adicione mais resultados conforme necessário -->
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="buscar_perfil.js"></script>
 </body>
 </html>

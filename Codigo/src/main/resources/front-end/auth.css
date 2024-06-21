@@ -1,44 +1,10 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #000;
-    color: #fff;
-}
-
-.navbar {
-    background-color: #000;
-    padding: 10px 0;
-    text-align: center;
-}
-
-.logo {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 20px;
-}
-
-.logo img {
-    height: 80px;
-}
-
-.menu {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 20px;
-}
-
-.menu a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px;
-    font-weight: bold;
-}
-
 .auth-container {
     max-width: 800px;
     margin: 20px auto;
-    padding: 0 20px;
+    padding: 20px;
+    background-color: #fff; /* Fundo branco similar ao estilo anterior */
+    border-radius: 5px; /* Borda arredondada */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
     text-align: center;
 }
 

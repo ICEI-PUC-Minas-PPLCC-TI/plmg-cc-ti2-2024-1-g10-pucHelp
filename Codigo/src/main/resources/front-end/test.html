@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+</head>
+<body>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" id="file-input" required>
+        <input type="text" id="matricula-input" placeholder="Enter Matricula" required>
+        <button type="submit" id="upload-button">Upload</button>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('upload-form').addEventListener('submit', (event) => {
+                event.preventDefault(); // Impede o recarregamento da página
+
+                const fileInput = document.getElementById('file-input');
+                const file = fileInput.files[0];
+                const matricula = document.getElementById('matricula-input').value;
+
+                if (file && matricula) {
+                    const formData = new FormData();
+                    formData.append('image', file);
+
+                    fetch(`http://localhost:3000/ocr/${matricula}`, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.text())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                } else {
+                    alert('Please select a file and enter a matricula first.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
