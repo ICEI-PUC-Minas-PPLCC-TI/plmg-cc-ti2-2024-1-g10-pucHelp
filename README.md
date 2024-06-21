@@ -20,6 +20,7 @@ O projeto se resume em uma mini rede social, onde somente alunos da PUC Minas te
 1- Para executar a aplicação, são necessárias a instalação de dependências Maven, e é recomendado o uso da plataforma Eclipse, que facilita a integração. Devem ser instaladas todas as dependências Maven contidas e declaradas no arquivo pom.xml presente em Codigo/src/main/java.
 2- O segundo passo é rodar o script sql presente em Codigo/src/main/resources/script_bd. Este código irá criar as tabelas necessárias no banco de dados para que o sistema funcione corretamente, e, além disso, irá popular algumas tabelas com informações iniciais para uso do sistema.
 4- O passo quatro consiste em configurar corretamente as keys relativas ao banco de dados Postgresql. Para isso deve se acessar cada um dos arquivos da pasta dao presentes em Codigo/src/main/java/dao. Cada um deles possui um método conectar, onde são setadas as keys e informações do banco de dados, como no exemplo abaixo:
+
 public boolean conectar() {
 		String driverName = "org.postgresql.Driver";                
 		String serverName = "localhost";
@@ -29,7 +30,6 @@ public boolean conectar() {
 		String username = "postgres";
 		String password = "root";
 		boolean status = false;
-
 		try {
 			Class.forName(driverName);
 			conexao = DriverManager.getConnection(url, username, password);
