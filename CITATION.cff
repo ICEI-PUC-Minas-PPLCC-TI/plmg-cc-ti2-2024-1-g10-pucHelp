@@ -1,31 +1,30 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
 title: PucHelp
-authors: Enzo Monteiro Alves, Jancker Nicolas, João Victor Martins, Pedro Siman e Victor Arrighi
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+authors:
+  - family-names: Monteiro Alves
+    given-names: Enzo
+  - family-names: Nicolas Yauri Lazo de La Vega
+    given-names: Jancker
+  - family-names: Martins dos Anjos
+    given-names: João Victor
+  - family-names: Siman Bittencourt
+    given-names: Pedro Henrique
+  - family-names: Cruz Arrighi
+    given-names: Victor Eduardo
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Gerônimo de Almeida
+    given-names: Sandro
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+  - family-names: Soares Vieira de Vasconcelos
+    given-names: Amália
 keywords:
-  - 
-  - 
-repository-code: 
+  - Puc
+  - Sistemas Inteligentes
+  - Rede Social
+repository-code: https://github.com/ICEI-PUC-Minas-PPLCC-TI/plmg-cc-ti2-2024-1-g10-pucHelp
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2022-07-14
+date-released: 2024-06-21
