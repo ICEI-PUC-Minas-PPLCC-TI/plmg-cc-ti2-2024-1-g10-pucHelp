@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Publicação - PUCHELP</title>
     <link rel="stylesheet" href="publicacao.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="navbar.css">
 </head>
@@ -20,16 +20,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="search.html"><i class="fas fa-search"></i>Search</a>
+                    <a class="nav-link" href="search.html"><i class="fas fa-search"></i> Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="autenticacao.html"><i class="fas fa-user"></i>Autenticação</a>
+                    <a class="nav-link" href="autenticacao.html"><i class="fas fa-user"></i> Autenticação</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="criar-publi.html"><i class="fas fa-plus-circle"></i>Criar publicação</a>
+                    <a class="nav-link" href="criar-publi.html"><i class="fas fa-plus-circle"></i> Criar publicação</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="perfil.html"><i class="fas fa-user"></i>Perfil</a>
+                    <a class="nav-link" href="perfil.html"><i class="fas fa-user"></i> Perfil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="admin-link" href="listagem-cursos.html" style="display: none">Listar Cursos (ADM)</a>
@@ -41,95 +41,136 @@
         </div>
     </nav>
 
-    <div class="create-container">
-        <textarea id="publicacao" class="create-box" rows="4" placeholder="Digite sua publicação aqui..."></textarea>
-        <input type="file" id="file" class="file-input" accept="image/*">
-        <br>
+    <div class="container my-4">
+        <div class="create-container">
+            <textarea id="publicacao" class="create-box" rows="4" placeholder="Digite sua publicação aqui..."></textarea>
+            <div class="file-input-container">
+                <label for="file" class="file-input-label"><i class="fas fa-upload"></i> Escolher arquivo</label>
+                <input type="file" id="file" class="file-input" accept="image/*">
+            </div>
+            <br><br>
 
-        <select name="tipo-publicacao" id="tipo-publicacao">
-            <option value="duvida">Dúvida</option>
-            <option value="sugestao">Sugestão</option>
-            <option value="elogio">Elogio</option>
-            <option value="outros">Outros</option>
-        </select>
-        <br>
-        <h4>Escolha o Curso que verá sua publicação: </h4>
-        <select name="curso" id="curso">
-            <option value="Todos">Todos</option>
-            <option value="adm">Administração</option>
-            <option value="ads">ADS</option>
-            <option value="Arquitetura">Arquitetura e Urbanismo</option>
-            <option value="Biomed">Biomedicina</option>
-            <option value="ccomp">Ciência da Computação</option>
-            <option value="cDados">Ciência de Dados</option>
-            <option value="cbio">Ciências Biológicas</option>
-            <option value="contabeis">Ciências Contábeis</option>
-            <option value="csociais">Ciências Sociais</option>
-            <option value="cinema">Cinema</option>
-            <option value="ComExt">Comércio Exterior</option>
-            <option value="ConstEdificios">Construção de Edifícios</option>
-            <option value="direito">Direito</option>
-            <option value="EdFis">Educação Física</option>
-            <option value="Enfermagem">Enfermagem</option>
-            <option value="EngAero">Engenharia Aeronáutica</option>
-            <option value="EngCivil">Engenharia Civil</option>
-            <option value="EngComp">Engenharia de Computação</option>
-            <option value="EngCont">Engenharia de Controle e Automação</option>
-            <option value="EngEnergia">Engenharia de Energia</option>
-            <option value="EngProd">Engenharia de Produção</option>
-            <option value="EngSoftware">Engenharia de Software</option>
-            <option value="EngEletrica">Engenharia Elétrica</option>
-            <option value="EngEletronica">Engenharia Eletrônica e de Telecomunicação</option>
-            <option value="EngMecanica">Engenharia Mecânica</option>
-            <option value="EngMecatronica">Engenharia Mecatrônica</option>
-            <option value="EngMetalurgica">Engenharia Metalúrgica</option>
-            <option value="EngQuimicas">Engenharia Química</option>
-            <option value="Farmácia">Farmácia</option>
-            <option value="Filosofia">Filosofia</option>
-            <option value="Física">Física</option>
-            <option value="Fisioterapia">Fisioterapia</option>
-            <option value="Fonoaudiologia">Fonoaudiologia</option>
-            <option value="Geografia">Geografia</option>
-            <option value="Historia">História</option>
-            <option value="Jogos">Jogos Digitais</option>
-            <option value="Jornalismo">Jornalismo</option>
-            <option value="Letras">Letras</option>
-            <option value="Logística">Logística</option>
-            <option value="Marketing">Marketing</option>
-            <option value="Matemática">Matemática</option>
-            <option value="Medicina">Medicina</option>
-            <option value="MedVet">Medicina Veterinária</option>
-            <option value="Nutrição">Nutrição</option>
-            <option value="Odontologia">Odontologia</option>
-            <option value="Pedagogia">Pedagogia</option>
-            <option value="Psicologia">Psicologia</option>
-            <option value="Publicidade">Publicidade e Propaganda</option>
-            <option value="RI">Relações Internacionais</option>
-            <option value="RP">Relações Públicas</option>
-            <option value="Segurança">Segurança da Informação</option>
-            <option value="SS">Serviço Social</option>
-            <option value="si">Sistemas de Informação</option>
-            <option value="SistemasInternet">Sistemas para Internet</option>
-            <option value="Teologia">Teologia</option>
-        </select>
-        <br>
-        <h4>Escolha o Campus que verá sua publicação: </h4>
-        <div name="campus" id="campus">
-            <input type="checkbox" value="campus1" checked>Coração Eucarístico</input>
-            <input type="checkbox" value="campus2" checked>Praça da Liberdade</input>
-            <input type="checkbox" value="campus3" checked>Betim</input>
-            <input type="checkbox" value="campus4" checked>Contagem</input>
-            <input type="checkbox" value="campus5" checked>São Gabriel</input>
-            <input type="checkbox" value="campus6" checked>Barreiro</input>
-            <input type="checkbox" value="campus7" checked>Poços de Caldas</input>
-            <input type="checkbox" value="campus8" checked>Arcos</input>
-            <input type="checkbox" value="campus9" checked>Serro</input>
-            <input type="checkbox" value="campus10" checked>Guanhães</input>
-            <input type="checkbox" value="campus11" checked>Uberlândia</input>
+            <label for="tipo-publicacao"><i class="fas fa-tags"></i> Tipo de Publicação:</label>
+            <br>
+            <select name="tipo-publicacao" id="tipo-publicacao">
+                <option value="duvida">Dúvida</option>
+                <option value="sugestao">Sugestão</option>
+                <option value="elogio">Elogio</option>
+                <option value="outros">Outros</option>
+            </select>
+            <br>
+            <br>
+                <h4><i class="fas fa-book"></i> Escolha o Curso que verá sua publicação:</h4>
+                <select name="curso" id="curso" class="form-control">
+                    <option value="Todos">Todos</option>
+                    <option value="adm">Administração</option>
+                    <option value="ads">ADS</option>
+                    <option value="Arquitetura">Arquitetura e Urbanismo</option>
+                    <option value="Biomed">Biomedicina</option>
+                    <option value="ccomp">Ciência da Computação</option>
+                    <option value="cDados">Ciência de Dados</option>
+                    <option value="cbio">Ciências Biológicas</option>
+                    <option value="contabeis">Ciências Contábeis</option>
+                    <option value="csociais">Ciências Sociais</option>
+                    <option value="cinema">Cinema</option>
+                    <option value="ComExt">Comércio Exterior</option>
+                    <option value="ConstEdificios">Construção de Edifícios</option>
+                    <option value="direito">Direito</option>
+                    <option value="EdFis">Educação Física</option>
+                    <option value="Enfermagem">Enfermagem</option>
+                    <option value="EngAero">Engenharia Aeronáutica</option>
+                    <option value="EngCivil">Engenharia Civil</option>
+                    <option value="EngComp">Engenharia de Computação</option>
+                    <option value="EngCont">Engenharia de Controle e Automação</option>
+                    <option value="EngEnergia">Engenharia de Energia</option>
+                    <option value="EngProd">Engenharia de Produção</option>
+                    <option value="EngSoftware">Engenharia de Software</option>
+                    <option value="EngEletrica">Engenharia Elétrica</option>
+                    <option value="EngEletronica">Engenharia Eletrônica e de Telecomunicação</option>
+                    <option value="EngMecanica">Engenharia Mecânica</option>
+                    <option value="EngMecatronica">Engenharia Mecatrônica</option>
+                    <option value="EngMetalurgica">Engenharia Metalúrgica</option>
+                    <option value="EngQuimicas">Engenharia Química</option>
+                    <option value="Farmácia">Farmácia</option>
+                    <option value="Filosofia">Filosofia</option>
+                    <option value="Física">Física</option>
+                    <option value="Fisioterapia">Fisioterapia</option>
+                    <option value="Fonoaudiologia">Fonoaudiologia</option>
+                    <option value="Geografia">Geografia</option>
+                    <option value="Historia">História</option>
+                    <option value="Jogos">Jogos Digitais</option>
+                    <option value="Jornalismo">Jornalismo</option>
+                    <option value="Letras">Letras</option>
+                    <option value="Logística">Logística</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Matemática">Matemática</option>
+                    <option value="Medicina">Medicina</option>
+                    <option value="MedVet">Medicina Veterinária</option>
+                    <option value="Nutrição">Nutrição</option>
+                    <option value="Odontologia">Odontologia</option>
+                    <option value="Pedagogia">Pedagogia</option>
+                    <option value="Psicologia">Psicologia</option>
+                    <option value="Publicidade">Publicidade e Propaganda</option>
+                    <option value="RI">Relações Internacionais</option>
+                    <option value="RP">Relações Públicas</option>
+                    <option value="Segurança">Segurança da Informação</option>
+                    <option value="SS">Serviço Social</option>
+                    <option value="si">Sistemas de Informação</option>
+                    <option value="SistemasInternet">Sistemas para Internet</option>
+                    <option value="Teologia">Teologia</option>
+                </select>
+                <br>
+            <h4><i class="fas fa-map-marker-alt"></i> Escolha o Campus que verá sua publicação:</h4>
+                <div name="campus" id="campus" class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus1" checked>
+                        <label class="form-check-label">Coração Eucarístico</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus2" checked>
+                        <label class="form-check-label">Praça da Liberdade</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus3" checked>
+                        <label class="form-check-label">Betim</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus4" checked>
+                        <label class="form-check-label">Contagem</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus5" checked>
+                        <label class="form-check-label">São Gabriel</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus6" checked>
+                        <label class="form-check-label">Barreiro</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus7" checked>
+                        <label class="form-check-label">Poços de Caldas</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus8" checked>
+                        <label class="form-check-label">Arcos</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus9" checked>
+                        <label class="form-check-label">Serro</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus10" checked>
+                        <label class="form-check-label">Guanhães</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" value="campus11" checked>
+                        <label class="form-check-label">Uberlândia</label>
+                    </div>
+                </div>
+                <br>
+                <button id="publicar-btn" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Publicar</button>
+            </div>
         </div>
-        <br>
-        <button id="publicar-btn" class="submit-btn">Publicar</button>
-    </div>
     <script src="publicacao.js"></script>
 </body>
 </html>

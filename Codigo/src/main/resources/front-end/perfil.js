@@ -31,11 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
           .setAttribute("src", usuario.foto);
         document.querySelector(".username").textContent = usuario.nome;
         document.querySelectorAll(".info p")[0].textContent =
-          "Unidade: " + usuario.unidade;
-        document.querySelectorAll(".info p")[1].textContent =
           "Período: " + usuario.periodo;
-        document.querySelectorAll(".info p")[2].textContent =
+        document.querySelectorAll(".info p")[1].textContent =
           "Email: " + usuario.email;
+        document.querySelectorAll(".info p")[2].textContent = "Aluno";
 
         // Realiza uma requisição GET para obter os dados do curso associado ao usuário
         fetch(`http://localhost:8080/cursos/${usuario.idCurso}`, {
@@ -135,16 +134,17 @@ document.addEventListener("DOMContentLoaded", function () {
           publicacoes.forEach(function (publicacao) {
             console.log(publicacao);
             var postContainer = document.createElement("div");
-            postContainer.classList.add("post");
+            postContainer.classList.add("post-container");
+            postContainer.classList.add("text-white")
 
-            var postImage = document.createElement("img");
-            postImage.src = publicacao.imagem;
-            postImage.alt = "Post Image";
-            postContainer.appendChild(postImage);
+            var post = document.createElement("div");
+            post.classList.add("post");
 
             var postCaption = document.createElement("p");
             postCaption.textContent = publicacao.conteudo;
-            postContainer.appendChild(postCaption);
+            post.appendChild(postCaption);
+
+            postContainer.appendChild(post);
 
             // Adiciona as ações (botões de edição e deleção) à publicação
             var actionsDiv = document.createElement("div");
@@ -155,14 +155,18 @@ document.addEventListener("DOMContentLoaded", function () {
             var commentsContainer = document.createElement("div");
             commentsContainer.classList.add("comments");
 
-            if (publicacao.comentarios && publicacao.comentarios.length > 0) {
-              publicacao.comentarios.forEach(function (comentario) {
+            console.log(publicacao);
+            if (publicacao.coments && publicacao.coments.length > 0) {
+              console.log(publicacao.coments);
+              const comments = publicacao.coments.split('\n');
+              console.log(comments);
+              comments.forEach(function (comentario) {
                 var comment = document.createElement("div");
                 comment.classList.add("comment");
 
                 var profileImg = document.createElement("img");
                 profileImg.classList.add("profile-img");
-                profileImg.src = comentario.foto;
+                profileImg.src = "https://via.placeholder.com/600x400";
                 profileImg.alt = "Profile Image";
                 comment.appendChild(profileImg);
 
@@ -174,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 commentInfo.appendChild(username);
 
                 var commentText = document.createElement("p");
-                commentText.textContent = comentario.texto;
+                commentText.textContent = comentario;
                 commentInfo.appendChild(commentText);
 
                 comment.appendChild(commentInfo);
@@ -182,7 +186,8 @@ document.addEventListener("DOMContentLoaded", function () {
               });
             }
 
-            postContainer.appendChild(commentsContainer);
+            post.appendChild(commentsContainer);
+            postContainer.appendChild(post);
             postsContainer.appendChild(postContainer);
           });
 
@@ -194,6 +199,7 @@ document.addEventListener("DOMContentLoaded", function () {
           var noPostsMessage = document.createElement("p");
           noPostsMessage.textContent = "Não há publicações.";
           noPostsMessage.classList.add("no-posts-message");
+          noPostsMessage.classList.add("text-center");
           postsContainer.appendChild(noPostsMessage);
         }
       })

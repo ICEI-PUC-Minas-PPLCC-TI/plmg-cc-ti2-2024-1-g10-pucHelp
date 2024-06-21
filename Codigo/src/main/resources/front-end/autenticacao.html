@@ -42,15 +42,18 @@
 
     <div class="container auth-container">
         <h2 class="text-center mt-4">Autenticação via Carteirinha</h2>
-        <p class="text-center">Tire uma foto da sua carteirinha:</p>
-        <input type="file" accept="image/*" capture="camera" class="camera-input form-control-file mx-auto d-block" id="camera-input">
-        <button class="camera-btn btn btn-primary mt-3 mx-auto d-block" onclick="document.getElementById('camera-input').click()">Abrir Câmera</button>
-        <div class="result mt-4 text-center" id="result"></div>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="image">Escolha uma imagem:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+            <br><br>
+            <button type="button" class="btn-primary text-center align-center" onclick="uploadImage()">Enviar</button>
+          </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="auth.js"></script>
 </body>
 </html>

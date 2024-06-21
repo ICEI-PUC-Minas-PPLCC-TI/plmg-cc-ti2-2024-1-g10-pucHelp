@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sessionStorage.setItem('matricula', matricula);
                 sessionStorage.setItem('id_usuario', id);
                 sessionStorage.setItem('senha', senha);
-                window.location.href = 'feed.html';
+                window.location.href = 'autenticacao.html';
 
 
             } else {

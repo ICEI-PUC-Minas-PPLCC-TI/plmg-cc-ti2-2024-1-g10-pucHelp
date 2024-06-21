@@ -2,12 +2,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #000;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
 }
 
 .navbar {
-    background-color: #000;
     padding: 10px 0;
     text-align: center;
 }
@@ -29,7 +28,7 @@ body {
 }
 
 .menu a {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     margin: 0 10px;
     font-weight: bold;
@@ -44,16 +43,32 @@ body {
 .create-box {
     width: 100%;
     padding: 10px;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
     margin-bottom: 20px;
-    background-color: #333;
-    color: #fff;
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+.file-input-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #000;
+    cursor: pointer;
 }
 
 .file-input {
-    margin-bottom: 20px;
+    display: none;
 }
 
 .submit-btn {
@@ -65,3 +80,15 @@ body {
     font-size: 16px;
     cursor: pointer;
 }
+
+#tipo-publicacao{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #ffffff;
+    border-color: rgb(190, 190, 190);
+    border-radius: 5px;
+    inline-size: 100%;
+}
+

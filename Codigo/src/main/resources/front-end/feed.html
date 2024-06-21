@@ -49,7 +49,7 @@
         <div class="upload-container mt-4">
             <form id="upload-form" class="form-inline">
                 <input type="file" id="image-file" name="image" accept="image/*" class="form-control mr-2" required />
-                <button type="submit" class="btn btn-primary">Enviar Imagem</button>
+                <button id="submitButton" type="submit" class="btn btn-primary">Enviar Imagem</button>
             </form>
         </div>
 
@@ -69,19 +69,26 @@
             }
 
             // Lidar com o envio da imagem
-            document.getElementById("upload-form").addEventListener("submit", async function (event) {
+            document.getElementById("upload-form").addEventListener("submit", function (event) {
                 event.preventDefault();
                 var formData = new FormData();
                 var imageFile = document.getElementById("image-file").files[0];
                 formData.append("image", imageFile);
 
-                await fetch("http://localhost:3000/ocr/00832564-", {
+                fetch("http://localhost:3000/ocr/00832564-", {
                     method: "POST",
                     body: formData
                 })
-                .then((response) => response.json())
+                .then((response) => {
+                  console.log(response);
+                  if (response.ok) {
+                    alert("aoba")
+                  } else {
+                    console.log("deu pau");
+                  }
+                })
                 .then((data) => {
-                    console.log(data);
+                    alert("Opa, deu tudo certo");
                     // Faça o que você precisar com os dados aqui
                 })
                 .catch((error) => {
@@ -135,7 +142,7 @@
                 username.setAttribute("href", "perfil.html");
                 console.log(publicacao);
                 // username.textContent = publicacao.idAluno;
-                username.textContent = "nome_usuario";
+                username.textContent = publicacao.nome;
 
                 var likeButton = document.createElement("button");
                 likeButton.innerHTML = '<i class="fas fa-heart"></i>';

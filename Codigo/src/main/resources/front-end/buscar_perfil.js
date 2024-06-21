@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         throw new Error("Erro ao buscar todos os perfis");
       })
       .then((data) => {
+        console.log(data);
         // Armazenar os perfis obtidos na variável todosPerfis
         todosPerfis = data;
 
@@ -74,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
               <img class="profile-img" src="${perfil.imagem}" alt="Profile Image">
               <div class="username">${perfil.nome}</div>
               <div class="info">
-                <p>Unidade: ${perfil.unidade}</p>
                 <p>Curso: ${await obterNomeCurso(perfil.idCurso)}</p>
                 <p>Período: ${perfil.periodo}</p>
                 <p>Email: ${perfil.email}</p>
