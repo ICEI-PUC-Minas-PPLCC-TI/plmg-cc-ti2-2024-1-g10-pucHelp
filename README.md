@@ -21,28 +21,28 @@ O projeto se resume em uma mini rede social, onde somente alunos da PUC Minas te
 2- O segundo passo é rodar o script sql presente em Codigo/src/main/resources/script_bd. Este código irá criar as tabelas necessárias no banco de dados para que o sistema funcione corretamente, e, além disso, irá popular algumas tabelas com informações iniciais para uso do sistema.
 4- O passo quatro consiste em configurar corretamente as keys relativas ao banco de dados Postgresql. Para isso deve se acessar cada um dos arquivos da pasta dao presentes em Codigo/src/main/java/dao. Cada um deles possui um método conectar, onde são setadas as keys e informações do banco de dados, como no exemplo abaixo:
 
-public boolean conectar() {
-		String driverName = "org.postgresql.Driver";                
-		String serverName = "localhost";
-		String mydatabase = "puchelp";
-		int porta = 5432;
-		String url = "jdbc:postgresql://" + serverName + ":" + porta +"/" + mydatabase;
-		String username = "postgres";
-		String password = "root";
-		boolean status = false;
-		try {
-			Class.forName(driverName);
-			conexao = DriverManager.getConnection(url, username, password);
-			status = (conexao == null);
-			System.out.println("Conexão efetuada com o postgres!");
-		} catch (ClassNotFoundException e) { 
-			System.err.println("Conexão NÃO efetuada com o postgres -- Driver não encontrado -- " + e.getMessage());
-		} catch (SQLException e) {
-			System.err.println("Conexão NÃO efetuada com o postgres -- " + e.getMessage());
+	public boolean conectar() {
+			String driverName = "org.postgresql.Driver";                
+			String serverName = "localhost";
+			String mydatabase = "puchelp";
+			int porta = 5432;
+			String url = "jdbc:postgresql://" + serverName + ":" + porta +"/" + mydatabase;
+			String username = "postgres";
+			String password = "root";
+			boolean status = false;
+			try {
+				Class.forName(driverName);
+				conexao = DriverManager.getConnection(url, username, password);
+				status = (conexao == null);
+				System.out.println("Conexão efetuada com o postgres!");
+			} catch (ClassNotFoundException e) { 
+				System.err.println("Conexão NÃO efetuada com o postgres -- Driver não encontrado -- " + e.getMessage());
+			} catch (SQLException e) {
+				System.err.println("Conexão NÃO efetuada com o postgres -- " + e.getMessage());
+			}
+	
+			return status;
 		}
-
-		return status;
-	}
  
 3- Após isso, o próximo passo é rodar o servidor Spark, que é o que faz nosso back-end funcionar. Para tal dentro do Eclipse, deve-se procurar o arquivo Main.java, no diretório Codigo/src/main/java/app, e executar a aplicação.
 
