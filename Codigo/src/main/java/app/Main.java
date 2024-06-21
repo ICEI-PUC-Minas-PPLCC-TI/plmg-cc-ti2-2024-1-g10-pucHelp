@@ -2,14 +2,21 @@ package app;
 import static spark.Spark.*;
 
 import service.CursoService;
+import service.ExtractMatriculaService;
 import service.UsuarioService;
 import service.PublicacaoService;
-
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse.BodyHandlers;
 public class Main {
 	
 	private static UsuarioService usuarioService = new UsuarioService();
     private static PublicacaoService publicacaoService = new PublicacaoService();
 	private static CursoService cursoService = new CursoService();
+	private static ExtractMatriculaService matriculaService = new ExtractMatriculaService();
     public static void main(String[] args) {
         port(8080);
         
@@ -39,14 +46,18 @@ public class Main {
             return usuarioService.add(request, response);
         });
         
+        // GET Usuario por ID
         get("/usuario/:id", (request, response) -> {
         	return usuarioService.getUsuarioById(request, response);
         });
 
+        // UPDATE de usuário
         put("/usuario/:id", (request, response) -> usuarioService.update(request, response));
 
+        // DELETE de usuário
         delete("/usuario/:id", (request, response) -> usuarioService.remove(request, response));
 
+        // List Usuário
         get("/usuario", (request, response) -> usuarioService.getAllUsuarioJSON());
         
         //login
@@ -83,14 +94,12 @@ public class Main {
             return cursoService.getCursoById(idCurso);
         });
         
-        // UPDATE
+        // UPDATE Curso
         put("/cursos/:id", (request, response) -> cursoService.update(request, response));
 
-        //DELETE
+        //DELETE Curso
         delete("/cursos/:id", (request, response) -> cursoService.delete(request, response));
 
-
-        
         // CRUD Publicacoes
         post("/publicacao", (request, response) -> {
         	System.out.println(request);
@@ -137,7 +146,12 @@ public class Main {
         delete("/publicacoes/delete/:id", (request, response) -> {
         	return publicacaoService.delete(request, response);
         });
-
+        
+        post("/ocr/:matricula", (request, response) -> {
+            System.out.println("Requisição GET /publicacao/:id recebida:");
+            return matriculaService.uploadImage(request, response);
+        });
+        
         after((request, response) -> response.type("application/json"));
                
     }

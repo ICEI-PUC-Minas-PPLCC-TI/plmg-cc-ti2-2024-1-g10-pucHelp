@@ -86,7 +86,7 @@ public class UsuarioDAO {
 				this.usuarios.add(usuario);
 			}
 		} catch (Exception e) {
-			System.out.println("ERRO ao gravar produto no disco!");
+			System.out.println("ERRO ao gravar usuario no disco!");
 			e.printStackTrace();
 		}
 		return usuarios;

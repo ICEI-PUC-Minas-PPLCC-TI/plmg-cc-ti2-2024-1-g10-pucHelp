@@ -276,6 +276,45 @@ public class UsuarioService {
 
         return jsonArray.toString();
     }
+    
+    public boolean checkMatricula(Request request, Response response) {
+        try {
+            // Obter a matrícula como parâmetro da solicitação
+            String matricula = request.params("matricula");
+            if (matricula == null) {
+                response.status(400); // 400 Bad Request
+                return false;
+            }
+
+            // Obter os dados de OCR como parâmetro da solicitação
+            String ocrDataParam = request.queryParams("ocrData");
+            if (ocrDataParam == null) {
+                response.status(400); // 400 Bad Request
+                return false;
+            }
+
+            // Converter o parâmetro ocrData para um objeto JSON
+            JSONArray ocrData = new JSONArray(ocrDataParam);
+            System.out.println(ocrData);
+
+            // Iterar sobre o JSON para verificar se a matrícula está presente
+            for (int i = 0; i < ocrData.length(); i++) {
+                JSONObject obj = ocrData.getJSONObject(i);
+                JSONArray lines = obj.getJSONArray("lines");
+                for (int j = 0; j < lines.length(); j++) {
+                    String line = lines.getString(j);
+                    // Verificar se o texto contém a matrícula
+                    if (line.contains(matricula)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        } catch (Exception e) {
+            response.status(500); // 500 Internal Server Error
+            return false;
+        }
+    }
 
 }
-        

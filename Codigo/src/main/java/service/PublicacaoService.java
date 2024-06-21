@@ -110,7 +110,7 @@ public class PublicacaoService {
                 publicacaoJSON.put("idAluno", publicacao.getIdAluno());
                 publicacaoJSON.put("like", publicacao.getLike());
                 publicacaoJSON.put("coments", publicacao.getComents());
-                
+                publicacaoJSON.put("nome", publicacao.getNome());
                 publicacoesArray.put(publicacaoJSON);
             }
 
@@ -232,6 +232,7 @@ public class PublicacaoService {
                     publicacaoJSON.put("idAluno", publicacao.getIdAluno());
                     publicacaoJSON.put("like", publicacao.getLike());
                     publicacaoJSON.put("coments", publicacao.getComents());
+                    publicacaoJSON.put("nome", publicacao.getNome());
 
                     publicacoesArray.put(publicacaoJSON);
                 }

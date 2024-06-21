@@ -109,7 +109,8 @@ public class PublicacaoDAO {
         List<Publicacao> publicacoes = new ArrayList<>();
         try {
             Statement st = conexao.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet rs = st.executeQuery("SELECT * FROM publicacoes");
+            ResultSet rs = st.executeQuery("SELECT p.*, u.nome FROM publicacoes p "
+            		+ "INNER JOIN usuario u ON p.idAluno = u.id");
 
             while (rs.next()) {
                 Publicacao publicacao = new Publicacao(
@@ -118,8 +119,10 @@ public class PublicacaoDAO {
                         rs.getString("conteudo"),
                         rs.getInt("idAluno"),
                         rs.getInt("likes"),
-                        rs.getString("coments")
+                        rs.getString("coments"),
+                        rs.getString("nome")
                 );
+                System.out.println(publicacao);
                 publicacoes.add(publicacao);
             }
             st.close();
@@ -230,7 +233,9 @@ public class PublicacaoDAO {
     public List<Publicacao> getPublicacoesByUsuario(int idUsuario) {
         List<Publicacao> publicacoes = new ArrayList<>();
         try {
-            PreparedStatement statement = conexao.prepareStatement("SELECT * FROM publicacoes WHERE idAluno = ?");
+            PreparedStatement statement = conexao.prepareStatement("SELECT p.*, u.nome FROM publicacoes p "
+            		+ "INNER JOIN usuario u ON p.idAluno = u.id "
+            		+ "WHERE p.idAluno = ?");
             statement.setInt(1, idUsuario);
             ResultSet rs = statement.executeQuery();
 
@@ -241,7 +246,8 @@ public class PublicacaoDAO {
                         rs.getString("conteudo"),
                         rs.getInt("idAluno"),
                         rs.getInt("likes"),
-                        rs.getString("coments")
+                        rs.getString("coments"),
+                        rs.getString("nome")
                 );
                 publicacoes.add(publicacao);
             }

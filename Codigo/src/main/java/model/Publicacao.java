@@ -7,7 +7,18 @@ public class Publicacao {
     private int idAluno;
     private int like;
     private String coments;
+    private String nome;
 
+    public Publicacao(int id, String tipo, String conteudo, int idAluno, int like, String coments, String nome) {
+        this.id = id;
+        this.tipo = tipo;
+        this.conteudo = conteudo;
+        this.idAluno = idAluno;
+        this.like = like;
+        this.coments = coments;
+        this.nome = nome;
+    }
+    
     public Publicacao(int id, String tipo, String conteudo, int idAluno, int like, String coments) {
         this.id = id;
         this.tipo = tipo;
@@ -15,6 +26,14 @@ public class Publicacao {
         this.idAluno = idAluno;
         this.like = like;
         this.coments = coments;
+    }
+    
+    public String getNome() {
+    	return nome;
+    }
+    
+    public void setNome(String nome) {
+    	this.nome = nome;
     }
 
     public int getId() {
@@ -68,6 +87,6 @@ public class Publicacao {
     @Override
     public String toString() {
         return "Publicacao [id=" + id + ", tipo=" + tipo + ", conteudo=" + conteudo + ", idAluno=" + idAluno
-                + ", like=" + like + ", coments=" + coments + "]";
+                + ", like=" + like + ", coments=" + coments + ", nome=" + nome + "]";
     }
 }
