@@ -68,34 +68,6 @@
                 }
             }
 
-            // Lidar com o envio da imagem
-            document.getElementById("upload-form").addEventListener("submit", function (event) {
-                event.preventDefault();
-                var formData = new FormData();
-                var imageFile = document.getElementById("image-file").files[0];
-                formData.append("image", imageFile);
-
-                fetch("http://localhost:3000/ocr/00832564-", {
-                    method: "POST",
-                    body: formData
-                })
-                .then((response) => {
-                  console.log(response);
-                  if (response.ok) {
-                    alert("aoba")
-                  } else {
-                    console.log("deu pau");
-                  }
-                })
-                .then((data) => {
-                    alert("Opa, deu tudo certo");
-                    // Faça o que você precisar com os dados aqui
-                })
-                .catch((error) => {
-                    console.error("Houve um problema com a operação fetch:", error);
-                });
-            });
-
             // Realiza uma requisição GET para obter as publicações do back-end
             fetch("http://localhost:8080/publicacoes", {
                 method: "GET",
